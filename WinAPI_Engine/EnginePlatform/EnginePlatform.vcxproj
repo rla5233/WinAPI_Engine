@@ -159,6 +159,12 @@
       <Project>{461ed5bd-81f6-4d42-9508-2bd7a97eae71}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EngineInput.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineInput.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
