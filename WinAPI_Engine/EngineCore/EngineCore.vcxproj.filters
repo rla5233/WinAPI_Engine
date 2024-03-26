@@ -13,6 +13,9 @@
     <Filter Include="Object\Actor">
       <UniqueIdentifier>{c41c2d2a-505f-4bc2-a42a-67730c22cc81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Component">
+      <UniqueIdentifier>{ed109c6c-17ff-4be5-8407-4893258988f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -24,6 +27,12 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Object\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -34,6 +43,12 @@
     </ClInclude>
     <ClInclude Include="Actor.h">
       <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <Filter>Object\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

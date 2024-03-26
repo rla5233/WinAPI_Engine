@@ -164,13 +164,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="EngineDebug.cpp" />
+    <ClCompile Include="SceneComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="EngineDebug.h" />
+    <ClInclude Include="SceneComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
