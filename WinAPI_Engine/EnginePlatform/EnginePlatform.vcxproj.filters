@@ -18,6 +18,9 @@
     <ClCompile Include="EngineSound.cpp">
       <Filter>Resources\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="EngineResources.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineInput.h">
@@ -25,6 +28,9 @@
     </ClInclude>
     <ClInclude Include="EngineSound.h">
       <Filter>Resources\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
