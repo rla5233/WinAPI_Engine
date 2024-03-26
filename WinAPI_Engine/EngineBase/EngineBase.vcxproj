@@ -168,6 +168,7 @@
     <ClInclude Include="EnginePath.h" />
     <ClInclude Include="EngineRandom.h" />
     <ClInclude Include="EngineSerializer.h" />
+    <ClInclude Include="EngineString.h" />
     <ClInclude Include="NameObject.h" />
     <ClInclude Include="PathObject.h" />
     <ClInclude Include="Transform.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="EnginePath.cpp" />
     <ClCompile Include="EngineRandom.cpp" />
     <ClCompile Include="EngineSerializer.cpp" />
+    <ClCompile Include="EngineString.cpp" />
     <ClCompile Include="NameObject.cpp" />
     <ClCompile Include="PathObject.cpp" />
     <ClCompile Include="Transform.cpp" />

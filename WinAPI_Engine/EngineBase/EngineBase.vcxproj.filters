@@ -13,6 +13,9 @@
     <Filter Include="Object">
       <UniqueIdentifier>{229bc37e-0098-4139-b0ab-daa60a59d16b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{6b4b2efe-a30b-4c8a-bbe5-f5297663d004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
@@ -45,6 +48,9 @@
     <ClInclude Include="PathObject.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="EngineString.h">
+      <Filter>String</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineDebug.cpp">
@@ -76,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="PathObject.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineString.cpp">
+      <Filter>String</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
