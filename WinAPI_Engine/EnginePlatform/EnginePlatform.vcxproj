@@ -163,11 +163,14 @@
     <ClCompile Include="EngineInput.cpp" />
     <ClCompile Include="EngineResources.cpp" />
     <ClCompile Include="EngineSound.cpp" />
+    <ClCompile Include="EngineWindow.cpp" />
+    <ClCompile Include="WindowImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineInput.h" />
     <ClInclude Include="EngineResources.h" />
     <ClInclude Include="EngineSound.h" />
+    <ClInclude Include="EngineWindow.h" />
     <ClInclude Include="ThirdParty\FMOD\inc\fmod.h" />
     <ClInclude Include="ThirdParty\FMOD\inc\fmod.hpp" />
     <ClInclude Include="ThirdParty\FMOD\inc\fmod_codec.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="ThirdParty\FMOD\inc\fmod_dsp_effects.h" />
     <ClInclude Include="ThirdParty\FMOD\inc\fmod_errors.h" />
     <ClInclude Include="ThirdParty\FMOD\inc\fmod_output.h" />
+    <ClInclude Include="WindowImage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\FMOD\Debug\fmodL.dll" />
