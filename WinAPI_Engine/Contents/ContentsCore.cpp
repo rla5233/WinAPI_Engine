@@ -2,6 +2,8 @@
 
 #include <EngineBase/EngineDirectory.h>
 
+#include "TestLevel.h"
+
 UContentsCore::UContentsCore()
 {
 }
@@ -14,12 +16,11 @@ void UContentsCore::BeginPlay()
 {
 	UEngineCore::BeginPlay();
 
-	MainWindow.SetClearColor(Color8Bit(2, 2, 27, 255));
-	MainWindow.SetWindowScale({ 1920, 1080 });
+	MainWindow.SetWindowScale({ 1280, 720 });
 	SetFrame(60);
 
-	//CreateLevel<Opening>("Opening");
-	//ChangeLevel("Opening");
+	CreateLevel<TestLevel>("TestLevel");
+	ChangeLevel("TestLevel");
 }
 
 void UContentsCore::WindowOpen(std::string& _OutWindowTitle, std::string& _SmallIconPath)
