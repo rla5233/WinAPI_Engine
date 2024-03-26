@@ -4,15 +4,27 @@
     <Filter Include="Input">
       <UniqueIdentifier>{82b48760-496c-4f5e-a329-b52e8646528d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{521ee7f2-931a-4cb2-b736-88ac9d6f6f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sound">
+      <UniqueIdentifier>{c24f8c76-f660-4b43-8281-47dbe7134be5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineInput.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="EngineSound.cpp">
+      <Filter>Resources\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineInput.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSound.h">
+      <Filter>Resources\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
