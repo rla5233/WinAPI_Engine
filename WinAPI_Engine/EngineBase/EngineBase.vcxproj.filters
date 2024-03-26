@@ -4,6 +4,9 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{d959c4be-581c-416a-84c5-9a4c560287b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{adca682a-acd2-47eb-bba4-6e0abfc80fa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
