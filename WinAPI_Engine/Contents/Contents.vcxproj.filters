@@ -13,6 +13,21 @@
     <Filter Include="Object\Actor">
       <UniqueIdentifier>{a2d91cc2-1d0f-447f-91bc-a87d039a63f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{972807f2-2d63-45a1-a0e0-f3632096c608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Box2D">
+      <UniqueIdentifier>{d1a69ca4-9b83-4d68-ab06-a03cddebb26e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Box2D\include">
+      <UniqueIdentifier>{9306d541-fdf5-4238-86c5-ce6d25e7261b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Box2D\lib">
+      <UniqueIdentifier>{736869cd-332b-4925-b331-fd8b4ba84d58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{a9d30127-f82c-40f7-985e-19bd6049873c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -21,7 +36,139 @@
     <ClInclude Include="TestLevel.h">
       <Filter>Object\Level</Filter>
     </ClInclude>
-    <ClInclude Include="TestActor.h">
+    <ClInclude Include="ThirdParty\Box2d\b2_api.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_block_allocator.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_body.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_broad_phase.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_chain_shape.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_circle_shape.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_collision.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_common.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_contact.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_contact_manager.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_distance.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_distance_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_draw.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_dynamic_tree.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_edge_shape.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_fixture.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_friction_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_gear_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_growable_stack.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_math.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_motor_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_mouse_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_polygon_shape.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_prismatic_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_pulley_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_revolute_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_rope.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_settings.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_shape.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_stack_allocator.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_time_of_impact.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_time_step.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_timer.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_types.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_weld_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_wheel_joint.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_world.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\b2_world_callbacks.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Box2d\box2d.h">
+      <Filter>ThirdParty\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsHelper.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Aim.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
       <Filter>Object\Actor</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,8 +179,25 @@
     <ClCompile Include="TestLevel.cpp">
       <Filter>Object\Level</Filter>
     </ClCompile>
-    <ClCompile Include="TestActor.cpp">
+    <ClCompile Include="Ground.cpp">
       <Filter>Object\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="ContentsHelper.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Aim.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\Box2d\lib\box2d.lib">
+      <Filter>ThirdParty\Box2D\lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>
