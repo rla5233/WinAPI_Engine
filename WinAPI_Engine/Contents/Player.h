@@ -52,13 +52,14 @@ protected:
 
 private:
 	UCollision* Collision = nullptr;
-	float Gravity = 1000.0f;
-
+	float Gravity = 500.0f;
+	float Swing_G = 10000.0f;
 
 	Aim* MouseAim = nullptr;
 	FVector HookPos = FVector::Zero;
 	float Theta = 0.0f;
-	float LopeLength = 0.0f;
+	float Max_Theta = 0.0f;
+	float RopeLength = 0.0f;
 
 	FVector Velocity = { 0.0f , 0.0f };
 

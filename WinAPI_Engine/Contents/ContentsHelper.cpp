@@ -27,3 +27,11 @@ float ContentsHelper::GetDistace(const FVector& _Pos1, const FVector& _Pos2)
 
 	return Result;
 }
+
+float ContentsHelper::GetVecSize(const FVector& _Vec)
+{
+	float Result = 0;
+	Result = powf(_Vec.X, 2) + powf(_Vec.Y, 2);
+	Result = std::sqrtf(Result);
+	return Result;
+}

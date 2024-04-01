@@ -44,10 +44,11 @@ void Player::SwingStart()
 {
 	HookPos = MouseAim->GetActorLocation();
 
-	LopeLength = ContentsHelper::GetDistace(HookPos, GetActorLocation());
+	RopeLength = ContentsHelper::GetDistace(HookPos, GetActorLocation());
 	FVector DirVec = (HookPos - GetActorLocation()).Normalize2DReturn();
 	FindTheta(DirVec, FVector::Up);
 	
+	Max_Theta = Theta;
 	Velocity = FVector::Zero;
 }
 
@@ -97,37 +98,46 @@ void Player::ThetaUpdate()
 
 void Player::SwingVelocityUpdate(float _DeltaTime)
 {
-	float Acc_X = 100.0f * sinf(Theta) * cosf(Theta);
-	float Acc_Y = 100.0f * sinf(Theta) * sinf(Theta);
-	Velocity += { Acc_X* _DeltaTime, Acc_Y* _DeltaTime, };
+	// 规过 1.
+	float Acc = Swing_G * sinf(Theta);
+	float Acc_X = Acc * cosf(Theta);
+	float Acc_Y = Acc * sinf(Theta);
+	
+	Acc = Swing_G * ((2.0f * cosf(Theta)) - (2.0f * cosf(Max_Theta)));
+	
+	Acc_X += Acc * sinf(Theta);
+	Acc_Y -= Acc * cosf(Theta);
+	
+	//// 规过 2.?
+	//float Gravity_Acc = Swing_G * sinf(Theta);
+	//float String_Acc = powf(ContentsHelper::GetVecSize(Velocity), 2) / RopeLength;	
 
+	//float Acc_X = Gravity_Acc * cosf(Theta);
+	//float Acc_Y = Gravity_Acc * sinf(Theta);
 
-	std::string theta = "Theta : " + std::to_string(Theta * UEngineMath::RToD);
-	std::string accX = "AccX : " + std::to_string(Acc_X);
-	std::string accY = "AccY : " + std::to_string(Acc_Y);
-	std::string velX = "VelX : " + std::to_string(Velocity.X);
-	std::string velY = "VelY : " + std::to_string(Velocity.Y);
+	//Acc_X += String_Acc * sinf(Theta);
+	//Acc_Y -= String_Acc * cosf(Theta);
+	
+	Velocity += { Acc_X * _DeltaTime, Acc_Y * _DeltaTime };
 
-	UEngineDebug::DebugTextPrint(theta, 20.0f);
-	UEngineDebug::DebugTextPrint(accX, 20.0f);
-	UEngineDebug::DebugTextPrint(velX, 20.0f);
-	UEngineDebug::DebugTextPrint(accY, 20.0f);
-	UEngineDebug::DebugTextPrint(velY, 20.0f);
+	{
+		std::string theta = "Theta : " + std::to_string(Theta * UEngineMath::RToD);
+		std::string accX = "AccX : " + std::to_string(Acc_X);
+		std::string accY = "AccY : " + std::to_string(Acc_Y);
+		std::string velX = "VelX : " + std::to_string(Velocity.X);
+		std::string velY = "VelY : " + std::to_string(Velocity.Y);
+
+		UEngineDebug::DebugTextPrint(theta, 20.0f);
+		UEngineDebug::DebugTextPrint(accX, 20.0f);
+		UEngineDebug::DebugTextPrint(velX, 20.0f);
+		UEngineDebug::DebugTextPrint(accY, 20.0f);
+		UEngineDebug::DebugTextPrint(velY, 20.0f);
+	}
 }
 
 void Player::SwingPosUpdate(float _DeltaTime)
 {
 	AddActorLocation(Velocity * _DeltaTime);
-
-	float Distance = ContentsHelper::GetDistace(GetActorLocation(), HookPos);
-	if (LopeLength < Distance)
-	{
-		float Diff = Distance - LopeLength;
-		FVector DirVec = (HookPos - GetActorLocation()).Normalize2DReturn();
-
-		FVector DiffPos = DirVec *= Diff;
-		AddActorLocation(DiffPos);
-	}
 }
 
 void Player::InputCheck(float _DeltaTime)
