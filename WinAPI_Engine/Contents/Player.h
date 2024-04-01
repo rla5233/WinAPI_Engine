@@ -27,6 +27,7 @@ public:
 
 public:
 	void MoveCheck();
+	void PosUpdate();
 
 	void StateChange(EPlayerState _State);
 

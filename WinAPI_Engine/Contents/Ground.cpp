@@ -28,7 +28,7 @@ void Ground::BeginPlay()
 
 	// Body Setting
 	b2PolygonShape groundBox;
-	FVector GroundScale = { 600.0f, 10.0f };
+	FVector GroundScale = { 800.0f, 10.0f };
 	groundBox.SetAsBox(GroundScale.X * 0.5f, GroundScale.Y * 0.5f); // 가로 600, 세로 20인 상자 생성
 	Body->CreateFixture(&groundBox, 0.0f); // 밀도는 0으로 설정
 

@@ -54,6 +54,7 @@ void Player::IdleStart()
 void Player::Idle(float _DeltaTime)
 {
 	MoveCheck();
+	PosUpdate();
 }
 
 void Player::Tick(float _DeltaTime)
@@ -80,17 +81,27 @@ void Player::MoveCheck()
 	if (UEngineInput::IsPress('A'))
 	{
 		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = -100.0f;
+		CurVel.x = -200.0f;
 		Body->SetLinearVelocity(CurVel);
 	}
 
 	if (UEngineInput::IsPress('D'))
 	{
 		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = 100.0f;
+		CurVel.x = 200.0f;
 		Body->SetLinearVelocity(CurVel);
 	}
 
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		b2Vec2 CurVel = Body->GetLinearVelocity();
+		CurVel.y = -300.0f;
+		Body->SetLinearVelocity(CurVel);
+	}
+}
+
+void Player::PosUpdate()
+{
 	float X = Body->GetPosition().x;
 	float Y = Body->GetPosition().y;
 	SetActorLocation({ X, Y });

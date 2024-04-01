@@ -59,5 +59,4 @@ void TestLevel::ResetPlayer()
 
 	FVector WinScale = ContentsHelper::GetWindowScale();
 	APlayer = SpawnActor<Player>();
-	APlayer->SetActorLocation({ WinScale.hX(), WinScale.Y * 0.5f });
 }
