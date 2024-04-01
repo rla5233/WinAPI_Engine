@@ -174,10 +174,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Aim.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Box.h">
       <SubType>
       </SubType>
@@ -244,10 +240,6 @@
     <ClInclude Include="ThirdParty\Box2d\box2d.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Aim.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Box.cpp">
       <SubType>
       </SubType>

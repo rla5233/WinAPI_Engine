@@ -9,7 +9,7 @@ enum class EPlayerState
 	Swing
 };
 
-class Aim;
+class b2Body;
 
 // Ό³Έν :
 class Player : public AActor
@@ -17,7 +17,7 @@ class Player : public AActor
 public:
 	// constructor destructor
 	Player();
-	~Player();
+	virtual ~Player();
 	
 	// delete Function
 	Player(const Player& _Other) = delete;
@@ -25,44 +25,25 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
-	void GravityUpdate(float _DeltaTime);
-	void InputCheck(float _DeltaTime);
-	void PosUpdate(float _DeltaTime);
-
-	void ChainAction(float _DeltaTime);
+public:
+	void MoveCheck();
 
 	void StateChange(EPlayerState _State);
 
-protected:
+public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void StateUpdate(float _DeltaTime);
+
+public:
 	void IdleStart();
 	void Idle(float _DeltaTime);
 
-	void SwingStart();
-	void Swing(float _DeltaTime);
 
-	void FindTheta(const FVector& _Vec1, const FVector& _Vec2);
-	void ThetaUpdate();
-	void SwingVelocityUpdate(float _DeltaTime);
-	void SwingPosUpdate(float _DeltaTime);
-
-	void StateUpdate(float _DeltaTime);
-
-private:
+public:
 	UCollision* Collision = nullptr;
-	float Gravity = 500.0f;
-	float Swing_G = 10000.0f;
-
-	Aim* MouseAim = nullptr;
-	FVector HookPos = FVector::Zero;
-	float Theta = 0.0f;
-	float Max_Theta = 0.0f;
-	float RopeLength = 0.0f;
-
-	FVector Velocity = { 0.0f , 0.0f };
+	b2Body* Body = nullptr;
 
 	EPlayerState State = EPlayerState::None;
 };
-

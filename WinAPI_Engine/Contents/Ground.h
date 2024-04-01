@@ -2,13 +2,15 @@
 
 #include <EngineCore/Actor.h>
 
+class b2Body;
+
 // Ό³Έν :
 class Ground : public AActor
 {
 public:
 	// constructor destructor
 	Ground();
-	~Ground();
+	virtual ~Ground();
 	
 	// delete Function
 	Ground(const Ground& _Other) = delete;
@@ -23,6 +25,5 @@ protected:
 
 private:
 	UCollision* Collision = nullptr;
-
+	b2Body* Body = nullptr;
 };
-

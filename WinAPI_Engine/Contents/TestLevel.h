@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Level.h>
 
+class b2World;
 class Ground;
 class Player;
 class Box;
@@ -19,20 +20,18 @@ public:
 	TestLevel& operator=(const TestLevel& _Other) = delete;
 	TestLevel& operator=(TestLevel&& _Other) noexcept = delete;
 
-	Player* GetPlayer() const
-	{
-		return APlayer;
-	}
-
 	void ResetPlayer();
 
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-private:
-	Ground* GroundBox = nullptr;
+public:
+	b2World* World = nullptr;
+
 	Player* APlayer = nullptr;
+
+	Ground* GroundBox = nullptr;
 	Box* ABox = nullptr;
 };
 
