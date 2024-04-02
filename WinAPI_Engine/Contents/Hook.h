@@ -41,7 +41,7 @@ public:
 	void HookSetting();
 	void JointSetting();
 
-private:
+public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
 	b2DistanceJoint* Joint = nullptr;

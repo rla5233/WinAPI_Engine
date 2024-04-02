@@ -9,6 +9,7 @@ enum class EPlayerState
 	Swing
 };
 
+struct b2Vec2;
 class b2Body;
 class Hook;
 
@@ -47,6 +48,8 @@ public:
 	void Swing(float _DeltaTime);
 	
 	void SwingMoveCheck();
+
+	b2Vec2 GetClockVec(const b2Vec2& _Vec, bool _IsClock);
 
 public:
 	UCollision* Collision = nullptr;

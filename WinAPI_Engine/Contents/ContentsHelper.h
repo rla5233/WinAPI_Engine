@@ -9,7 +9,6 @@ public:
 	static float GetDistace(const FVector& _Pos1, const FVector& _Pos2);
 	static float GetVecSize(const FVector& _Vec);
 
-
 public:
 	// constructor destructor
 	ContentsHelper();

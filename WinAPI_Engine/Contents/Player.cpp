@@ -82,23 +82,50 @@ void Player::Swing(float _DeltaTime)
 
 void Player::SwingMoveCheck()
 {
-	if (UEngineInput::IsPress(VK_SHIFT))
+	if (UEngineInput::IsDown(VK_SHIFT))
 	{
-		Body->ApplyLinearImpulseToCenter({ -0.1f, 0.0f }, true);
-		//Body->ApplyAngularImpulse(-1.0f, true);
+		b2Vec2 HookPos = AHook->Body->GetPosition();
+		b2Vec2 PlayerPos = Body->GetPosition();
+		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, false);
+		DirVec *= 0.5f;
+		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 
 	if (UEngineInput::IsPress('A'))
 	{
-		Body->ApplyLinearImpulseToCenter({ -0.1f, 0.0f }, true);
-		//Body->ApplyAngularImpulse(-1.0f, true);
+		b2Vec2 HookPos = AHook->Body->GetPosition();
+		b2Vec2 PlayerPos = Body->GetPosition();
+		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, true);
+		DirVec *= 0.004f;
+		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 
 	if (UEngineInput::IsPress('D'))
 	{
-		Body->ApplyLinearImpulseToCenter({ 0.1f, 0.0f }, true);
-		//Body->ApplyAngularImpulse(1.0f, true);
+		b2Vec2 HookPos = AHook->Body->GetPosition();
+		b2Vec2 PlayerPos = Body->GetPosition();
+		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, false);
+		DirVec *= 0.004f;
+		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
+}
+
+b2Vec2 Player::GetClockVec(const b2Vec2& _Vec, bool _IsClock)
+{
+	b2Vec3 Norm = { 0.0f, 0.0f, 1.0f };
+	b2Vec3 HtoP = { _Vec.x, _Vec.y, 0.0f };
+
+	b2Vec3 Result = { 0.0f, 0.0f, 0.0f };
+	Result.x = { (HtoP.y * Norm.z) - (HtoP.z * Norm.y) };
+	Result.y = { (HtoP.z * Norm.x) - (HtoP.x * Norm.z) };
+	Result.z = { (HtoP.x * Norm.y) - (HtoP.y * Norm.x) };
+
+	if (true == _IsClock)
+	{
+		Result *= -1;
+	}
+
+	return { Result.x, Result.y };
 }
 
 void Player::Tick(float _DeltaTime)
