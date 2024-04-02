@@ -41,5 +41,4 @@ void Ground::BeginPlay()
 void Ground::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
-
 }

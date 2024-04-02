@@ -74,6 +74,5 @@ public:
 
 	Hook* AHook = nullptr;
 
-	bool IsGroundValue = false;
 	EPlayerState State = EPlayerState::None;
 };

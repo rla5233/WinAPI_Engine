@@ -64,7 +64,7 @@ void Player::Idle(float _DeltaTime)
 		StateChange(EPlayerState::Swing);
 	}
 
-	if (UEngineInput::IsDown('A') || UEngineInput::IsDown('D'))
+	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D'))
 	{
 		StateChange(EPlayerState::Walking);
 	}
@@ -73,18 +73,6 @@ void Player::Idle(float _DeltaTime)
 	{
 		StateChange(EPlayerState::Jump);
 	}
-}
-
-void Player::JumpStart()
-{
-
-}
-
-void Player::Jump(float _DeltaTime)
-{
-	
-
-
 }
 
 void Player::WalkingStart()
@@ -118,6 +106,22 @@ void Player::Walking(float _DeltaTime)
 	if (UEngineInput::IsDown(VK_SPACE))
 	{
 		StateChange(EPlayerState::Jump);
+	}
+}
+
+void Player::JumpStart()
+{
+	Body->ApplyLinearImpulseToCenter({ 0.0f, -1.0f }, true);
+}
+
+void Player::Jump(float _DeltaTime)
+{
+	PosUpdate();
+	CameraPosUpdate();
+
+	if (0.0f <= Body->GetLinearVelocity().y)
+	{
+		StateChange(EPlayerState::Falling);
 	}
 }
 
@@ -192,6 +196,37 @@ void Player::FallingStart()
 
 void Player::Falling(float _DeltaTime)
 {
+	PosUpdate();
+	CameraPosUpdate();
+
+	if (UEngineInput::IsPress('A'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ -10.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsUp('A'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ 0.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsPress('D'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ 10.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsUp('D'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ 0.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsDown(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Swing);
+	}
 }
 
 void Player::PosUpdate()
@@ -218,10 +253,37 @@ void Player::DebugUpdate()
 	b2Vec2 Vel = Body->GetLinearVelocity();
 	std::string VelX = "V.x : " + std::to_string(Vel.x);
 	std::string VelY = "V.y : " + std::to_string(Vel.y);
+	std::string state = "";
+
+	switch (State)
+	{
+	case EPlayerState::None:
+		state += "None";
+		break;
+	case EPlayerState::Idle:
+		state += "Idle";
+		break;
+	case EPlayerState::Walking:
+		state += "Walking";
+		break;
+	case EPlayerState::Jump:
+		state += "Jump";
+		break;
+	case EPlayerState::Run:
+		state += "Run";
+		break;
+	case EPlayerState::Swing:
+		state += "Swing";
+		break;
+	case EPlayerState::Falling:
+		state += "Falling";
+		break;
+	}
 
 	UEngineDebug::DebugTextPrint("[Player Body]", 20);
 	UEngineDebug::DebugTextPrint(VelX, 20);
 	UEngineDebug::DebugTextPrint(VelY, 20);
+	UEngineDebug::DebugTextPrint(state, 20);
 }
 
 void Player::Tick(float _DeltaTime)
