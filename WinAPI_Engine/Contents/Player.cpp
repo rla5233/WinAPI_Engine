@@ -6,6 +6,7 @@
 #include "ThirdParty/Box2d/include/box2d.h"
 
 #include <EnginePlatform/EngineInput.h>
+#include <EngineCore/EngineDebug.h>
 
 Player::Player()
 {
@@ -153,18 +154,12 @@ void Player::MoveCheck()
 {
 	if (UEngineInput::IsPress('A'))
 	{
-		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = -10.0f;
-		Body->SetLinearVelocity(CurVel);
-		//Body->ApplyLinearImpulseToCenter({ -0.05f, 0.0f }, true);
+		Body->ApplyLinearImpulseToCenter({ -0.05f, 0.0f }, true);
 	}
 
 	if (UEngineInput::IsPress('D'))
 	{
-		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = 10.0f;
-		Body->SetLinearVelocity(CurVel);
-		//Body->ApplyLinearImpulseToCenter({ 0.05f, 0.0f }, true);
+		Body->ApplyLinearImpulseToCenter({ 0.05f, 0.0f }, true);
 	}
 
 	if (UEngineInput::IsUp('A') || UEngineInput::IsUp('D'))
@@ -187,6 +182,8 @@ void Player::PosUpdate()
 	float X = Body->GetPosition().x;
 	float Y = Body->GetPosition().y;
 	SetActorLocation({ X * 30.0f, Y * 30.0f });
+
+	DebugUpdate();
 }
 
 void Player::CameraPosUpdate()
@@ -197,7 +194,18 @@ void Player::CameraPosUpdate()
 	FVector CurPos = GetActorLocation();
 
 	Level->SetCameraPos({ CurPos.X - WinScale.hX(), 0.0f});
-	
+}
+
+void Player::DebugUpdate()
+{
+	b2Vec2 Vel = Body->GetLinearVelocity();
+	std::string VelX = "V.x : " + std::to_string(Vel.x);
+	std::string VelY = "V.y : " + std::to_string(Vel.y);
+
+	UEngineDebug::DebugTextPrint("[Player Body]", 20);
+	UEngineDebug::DebugTextPrint(VelX, 20);
+	UEngineDebug::DebugTextPrint(VelY, 20);
+
 
 }
 

@@ -6,7 +6,8 @@ enum class EPlayerState
 {
 	None,
 	Idle,
-	Swing
+	Swing,
+	Falling,
 };
 
 struct b2Vec2;
@@ -31,6 +32,7 @@ public:
 	void MoveCheck();
 	void PosUpdate();
 	void CameraPosUpdate();
+	void DebugUpdate();
 
 	void StateChange(EPlayerState _State);
 
