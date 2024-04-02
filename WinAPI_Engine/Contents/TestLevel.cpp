@@ -34,6 +34,8 @@ void TestLevel::BeginPlay()
 	GroundBox = SpawnActor<Ground>();
 
 	GEngine->EngineDebugSwitch();
+
+
 }
 
 void TestLevel::Tick(float _DeltaTime)

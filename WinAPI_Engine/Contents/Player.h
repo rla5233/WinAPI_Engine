@@ -30,6 +30,7 @@ public:
 public:
 	void MoveCheck();
 	void PosUpdate();
+	void CameraPosUpdate();
 
 	void StateChange(EPlayerState _State);
 

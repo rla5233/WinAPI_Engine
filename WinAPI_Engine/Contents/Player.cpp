@@ -56,6 +56,7 @@ void Player::Idle(float _DeltaTime)
 {
 	MoveCheck();
 	PosUpdate();
+	CameraPosUpdate();
 
 	if (UEngineInput::IsPress(VK_LBUTTON))
 	{
@@ -71,8 +72,8 @@ void Player::SwingStart()
 void Player::Swing(float _DeltaTime)
 {
 	PosUpdate();
-
 	SwingMoveCheck();
+	CameraPosUpdate();
 
 	if (UEngineInput::IsUp(VK_LBUTTON))
 	{
@@ -87,7 +88,7 @@ void Player::SwingMoveCheck()
 		b2Vec2 HookPos = AHook->Body->GetPosition();
 		b2Vec2 PlayerPos = Body->GetPosition();
 		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, false);
-		DirVec *= 0.5f;
+		DirVec *= 0.3f;
 		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 
@@ -186,6 +187,18 @@ void Player::PosUpdate()
 	float X = Body->GetPosition().x;
 	float Y = Body->GetPosition().y;
 	SetActorLocation({ X * 30.0f, Y * 30.0f });
+}
+
+void Player::CameraPosUpdate()
+{
+	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
+	
+	FVector WinScale = ContentsHelper::GetWindowScale();
+	FVector CurPos = GetActorLocation();
+
+	Level->SetCameraPos({ CurPos.X - WinScale.hX(), 0.0f});
+	
+
 }
 
 void Player::StateChange(EPlayerState _State)

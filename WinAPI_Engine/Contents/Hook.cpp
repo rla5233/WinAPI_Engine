@@ -73,15 +73,17 @@ void Hook::Hooked(float _DeltaTime)
 
 void Hook::HookSetting()
 {
+	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
+
 	// Actor Setting
 	FVector MousePos = GEngine->MainWindow.GetMousePosition();
+	MousePos += Level->GetCameraPos();
 	SetActorLocation(MousePos);
 
 	// Body Create
 	b2BodyDef BodyDef;
 	BodyDef.type = b2_staticBody;										// 정적 객체로 설정 (중력의 영향을 받음)
 	BodyDef.position.Set(GetActorLocation().X / 30.0f, GetActorLocation().Y / 30.0f);	// 첫 번째 상자의 위치 (x는 -5, y는 5)
-	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
 	Body = Level->World->CreateBody(&BodyDef);
 
 	// Body Setting
