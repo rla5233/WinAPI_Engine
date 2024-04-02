@@ -6,6 +6,9 @@ enum class EPlayerState
 {
 	None,
 	Idle,
+	Walking,
+	Jump,
+	Run,
 	Swing,
 	Falling,
 };
@@ -29,7 +32,6 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 public:
-	void MoveCheck();
 	void PosUpdate();
 	void CameraPosUpdate();
 	void DebugUpdate();
@@ -47,6 +49,14 @@ public:
 	void Idle(float _DeltaTime);
 
 public:
+	void JumpStart();
+	void Jump(float _DeltaTime);
+
+public:
+	void WalkingStart();
+	void Walking(float _DeltaTime);
+
+public:
 	void SwingStart();
 	void Swing(float _DeltaTime);
 	
@@ -55,10 +65,15 @@ public:
 	b2Vec2 GetClockVec(const b2Vec2& _Vec, bool _IsClock);
 
 public:
+	void FallingStart();
+	void Falling(float _DeltaTime);
+
+public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
 
 	Hook* AHook = nullptr;
 
+	bool IsGroundValue = false;
 	EPlayerState State = EPlayerState::None;
 };

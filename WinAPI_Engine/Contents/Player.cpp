@@ -38,7 +38,7 @@ void Player::BeginPlay()
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBody;
 	fixtureDef.density = 1.0f;			// 밀도 설정
-	fixtureDef.friction = 0.3f;		// 마찰력 설정
+	fixtureDef.friction = 0.0f;		// 마찰력 설정
 	Body->CreateFixture(&fixtureDef);
 
 	// Collision Setting
@@ -51,17 +51,73 @@ void Player::BeginPlay()
 
 void Player::IdleStart()
 {
+	Body->SetLinearVelocity({ 0.0f, 0.0f });
 }
 
 void Player::Idle(float _DeltaTime)
 {
-	MoveCheck();
 	PosUpdate();
 	CameraPosUpdate();
 
-	if (UEngineInput::IsPress(VK_LBUTTON))
+	if (UEngineInput::IsDown(VK_LBUTTON))
 	{
 		StateChange(EPlayerState::Swing);
+	}
+
+	if (UEngineInput::IsDown('A') || UEngineInput::IsDown('D'))
+	{
+		StateChange(EPlayerState::Walking);
+	}
+
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		StateChange(EPlayerState::Jump);
+	}
+}
+
+void Player::JumpStart()
+{
+
+}
+
+void Player::Jump(float _DeltaTime)
+{
+	
+
+
+}
+
+void Player::WalkingStart()
+{
+	if (UEngineInput::IsPress('A'))
+	{
+		Body->SetLinearVelocity({ -10.0f, 0.0f });
+	}
+
+	if (UEngineInput::IsPress('D'))
+	{
+		Body->SetLinearVelocity({ 10.0f, 0.0f });
+	}
+}
+
+void Player::Walking(float _DeltaTime)
+{
+	PosUpdate();
+	CameraPosUpdate();
+
+	if (UEngineInput::IsDown(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Swing);
+	}
+
+	if (UEngineInput::IsUp('A') || UEngineInput::IsUp('D'))
+	{
+		StateChange(EPlayerState::Idle);
+	}
+
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		StateChange(EPlayerState::Jump);
 	}
 }
 
@@ -78,7 +134,7 @@ void Player::Swing(float _DeltaTime)
 
 	if (UEngineInput::IsUp(VK_LBUTTON))
 	{
-		StateChange(EPlayerState::Idle);
+		StateChange(EPlayerState::Falling);
 	}
 }
 
@@ -130,51 +186,12 @@ b2Vec2 Player::GetClockVec(const b2Vec2& _Vec, bool _IsClock)
 	return { Result.x, Result.y };
 }
 
-void Player::Tick(float _DeltaTime)
+void Player::FallingStart()
 {
-	AActor::Tick(_DeltaTime);
-
-	StateUpdate(_DeltaTime);
 }
 
-void Player::StateUpdate(float _DeltaTime)
+void Player::Falling(float _DeltaTime)
 {
-	switch (State)
-	{
-	case EPlayerState::Idle:
-		Idle(_DeltaTime);
-		break;
-	case EPlayerState::Swing:
-		Swing(_DeltaTime);
-		break;
-	}
-}
-
-void Player::MoveCheck()
-{
-	if (UEngineInput::IsPress('A'))
-	{
-		Body->ApplyLinearImpulseToCenter({ -0.05f, 0.0f }, true);
-	}
-
-	if (UEngineInput::IsPress('D'))
-	{
-		Body->ApplyLinearImpulseToCenter({ 0.05f, 0.0f }, true);
-	}
-
-	if (UEngineInput::IsUp('A') || UEngineInput::IsUp('D'))
-	{
-		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = 0.0f;
-		Body->SetLinearVelocity(CurVel);
-	}
-
-	if (UEngineInput::IsDown(VK_SPACE))
-	{
-		//b2Vec2 CurVel = Body->GetLinearVelocity();
-		//CurVel.y = -1.0f;
-		Body->ApplyLinearImpulseToCenter({ 0.0f, -1.0f }, true);
-	}
 }
 
 void Player::PosUpdate()
@@ -205,8 +222,37 @@ void Player::DebugUpdate()
 	UEngineDebug::DebugTextPrint("[Player Body]", 20);
 	UEngineDebug::DebugTextPrint(VelX, 20);
 	UEngineDebug::DebugTextPrint(VelY, 20);
+}
 
+void Player::Tick(float _DeltaTime)
+{
+	AActor::Tick(_DeltaTime);
 
+	StateUpdate(_DeltaTime);
+}
+
+void Player::StateUpdate(float _DeltaTime)
+{
+	switch (State)
+	{
+	case EPlayerState::Idle:
+		Idle(_DeltaTime);
+		break;
+	case EPlayerState::Walking:
+		Walking(_DeltaTime);
+		break;
+	case EPlayerState::Jump:
+		Jump(_DeltaTime);
+		break;
+	case EPlayerState::Run:
+		break;
+	case EPlayerState::Swing:
+		Swing(_DeltaTime);
+		break;
+	case EPlayerState::Falling:
+		Falling(_DeltaTime);
+		break;
+	}
 }
 
 void Player::StateChange(EPlayerState _State)
@@ -218,8 +264,19 @@ void Player::StateChange(EPlayerState _State)
 		case EPlayerState::Idle:
 			IdleStart();
 			break;
+		case EPlayerState::Walking:
+			WalkingStart();
+			break;
+		case EPlayerState::Jump:
+			JumpStart();
+			break;
+		case EPlayerState::Run:
+			break;
 		case EPlayerState::Swing:
 			SwingStart();
+			break;
+		case EPlayerState::Falling:
+			FallingStart();
 			break;
 		}
 	}
