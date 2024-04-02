@@ -24,7 +24,7 @@ void TestLevel::BeginPlay()
 	FVector WinScale = ContentsHelper::GetWindowScale();
 	
 	// World Setting
-	b2Vec2 gravity(0.0f, 500.0f);
+	b2Vec2 gravity(0.0f, 20.0f);
 	World = new b2World(gravity);
 		
 	// Player Spawn

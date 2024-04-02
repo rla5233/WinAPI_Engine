@@ -2,6 +2,7 @@
 
 #include "ContentsHelper.h"
 #include "TestLevel.h"
+#include "Hook.h"
 #include "ThirdParty/Box2d/include/box2d.h"
 
 #include <EnginePlatform/EngineInput.h>
@@ -23,21 +24,21 @@ void Player::BeginPlay()
 	SetActorLocation(WinScale.Half2D());
 	
 	// Body Create
-	b2BodyDef box1BodyDef;
-	box1BodyDef.type = b2_dynamicBody;										// 동적 객체로 설정 (중력의 영향을 받음)
-	box1BodyDef.position.Set(GetActorLocation().X, GetActorLocation().Y);	// 첫 번째 상자의 위치 (x는 -5, y는 5)
+	b2BodyDef BodyDef;
+	BodyDef.type = b2_dynamicBody;										// 동적 객체로 설정 (중력의 영향을 받음)
+	BodyDef.position.Set(GetActorLocation().X / 30.0f, GetActorLocation().Y / 30.0f);	// 첫 번째 상자의 위치 (x는 -5, y는 5)
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
-	Body = Level->World->CreateBody(&box1BodyDef);
+	Body = Level->World->CreateBody(&BodyDef);
 
 	// Body Setting
-	b2PolygonShape dynamicBox1;
+	b2PolygonShape dynamicBody;
 	FVector BoxScale = { 10.0f, 10.0f };
-	dynamicBox1.SetAsBox(BoxScale.X * 0.5f, BoxScale.Y * 0.5f);	 // 가로 10, 세로 10인 상자 생성
-	b2FixtureDef fixtureDef1;
-	fixtureDef1.shape = &dynamicBox1;
-	fixtureDef1.density = 1.0f;			// 밀도 설정
-	fixtureDef1.friction = 0.3f;		// 마찰력 설정
-	Body->CreateFixture(&fixtureDef1);
+	dynamicBody.SetAsBox((BoxScale.X * 0.5f) / 30.0f, (BoxScale.Y * 0.5f) / 30.0f);	 // 가로 10, 세로 10인 상자 생성
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBody;
+	fixtureDef.density = 1.0f;			// 밀도 설정
+	fixtureDef.friction = 0.3f;		// 마찰력 설정
+	Body->CreateFixture(&fixtureDef);
 
 	// Collision Setting
 	Collision = CreateCollision();
@@ -55,6 +56,49 @@ void Player::Idle(float _DeltaTime)
 {
 	MoveCheck();
 	PosUpdate();
+
+	if (UEngineInput::IsPress(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Swing);
+	}
+}
+
+void Player::SwingStart()
+{
+	AHook = GetWorld()->SpawnActor<Hook>();
+}
+
+void Player::Swing(float _DeltaTime)
+{
+	PosUpdate();
+
+	SwingMoveCheck();
+
+	if (UEngineInput::IsUp(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Idle);
+	}
+}
+
+void Player::SwingMoveCheck()
+{
+	if (UEngineInput::IsPress(VK_SHIFT))
+	{
+		Body->ApplyLinearImpulseToCenter({ -0.1f, 0.0f }, true);
+		//Body->ApplyAngularImpulse(-1.0f, true);
+	}
+
+	if (UEngineInput::IsPress('A'))
+	{
+		Body->ApplyLinearImpulseToCenter({ -0.1f, 0.0f }, true);
+		//Body->ApplyAngularImpulse(-1.0f, true);
+	}
+
+	if (UEngineInput::IsPress('D'))
+	{
+		Body->ApplyLinearImpulseToCenter({ 0.1f, 0.0f }, true);
+		//Body->ApplyAngularImpulse(1.0f, true);
+	}
 }
 
 void Player::Tick(float _DeltaTime)
@@ -72,6 +116,7 @@ void Player::StateUpdate(float _DeltaTime)
 		Idle(_DeltaTime);
 		break;
 	case EPlayerState::Swing:
+		Swing(_DeltaTime);
 		break;
 	}
 }
@@ -81,22 +126,31 @@ void Player::MoveCheck()
 	if (UEngineInput::IsPress('A'))
 	{
 		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = -200.0f;
+		CurVel.x = -10.0f;
 		Body->SetLinearVelocity(CurVel);
+		//Body->ApplyLinearImpulseToCenter({ -0.05f, 0.0f }, true);
 	}
 
 	if (UEngineInput::IsPress('D'))
 	{
 		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.x = 200.0f;
+		CurVel.x = 10.0f;
+		Body->SetLinearVelocity(CurVel);
+		//Body->ApplyLinearImpulseToCenter({ 0.05f, 0.0f }, true);
+	}
+
+	if (UEngineInput::IsUp('A') || UEngineInput::IsUp('D'))
+	{
+		b2Vec2 CurVel = Body->GetLinearVelocity();
+		CurVel.x = 0.0f;
 		Body->SetLinearVelocity(CurVel);
 	}
 
 	if (UEngineInput::IsDown(VK_SPACE))
 	{
-		b2Vec2 CurVel = Body->GetLinearVelocity();
-		CurVel.y = -300.0f;
-		Body->SetLinearVelocity(CurVel);
+		//b2Vec2 CurVel = Body->GetLinearVelocity();
+		//CurVel.y = -1.0f;
+		Body->ApplyLinearImpulseToCenter({ 0.0f, -1.0f }, true);
 	}
 }
 
@@ -104,7 +158,7 @@ void Player::PosUpdate()
 {
 	float X = Body->GetPosition().x;
 	float Y = Body->GetPosition().y;
-	SetActorLocation({ X, Y });
+	SetActorLocation({ X * 30.0f, Y * 30.0f });
 }
 
 void Player::StateChange(EPlayerState _State)
@@ -117,6 +171,7 @@ void Player::StateChange(EPlayerState _State)
 			IdleStart();
 			break;
 		case EPlayerState::Swing:
+			SwingStart();
 			break;
 		}
 	}

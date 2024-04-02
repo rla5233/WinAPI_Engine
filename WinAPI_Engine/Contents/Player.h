@@ -10,6 +10,7 @@ enum class EPlayerState
 };
 
 class b2Body;
+class Hook;
 
 // Ό³Έν :
 class Player : public AActor
@@ -41,10 +42,17 @@ public:
 	void IdleStart();
 	void Idle(float _DeltaTime);
 
+public:
+	void SwingStart();
+	void Swing(float _DeltaTime);
+	
+	void SwingMoveCheck();
 
 public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
+
+	Hook* AHook = nullptr;
 
 	EPlayerState State = EPlayerState::None;
 };

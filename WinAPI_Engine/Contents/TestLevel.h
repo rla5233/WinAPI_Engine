@@ -4,6 +4,7 @@
 class b2World;
 class Ground;
 class Player;
+
 class Box;
 
 // Ό³Έν :
@@ -30,8 +31,9 @@ public:
 	b2World* World = nullptr;
 
 	Player* APlayer = nullptr;
-
 	Ground* GroundBox = nullptr;
+
+
 	Box* ABox = nullptr;
 };
 

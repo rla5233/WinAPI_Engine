@@ -168,6 +168,9 @@
     <ClInclude Include="Box.h">
       <Filter>Object\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Hook.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -186,6 +189,9 @@
       <Filter>Object\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Box.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Hook.cpp">
       <Filter>Object\Actor</Filter>
     </ClCompile>
   </ItemGroup>
