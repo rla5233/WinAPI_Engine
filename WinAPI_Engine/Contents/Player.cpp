@@ -26,11 +26,12 @@ void Player::BeginPlay()
 	
 	// Body Create
 	b2BodyDef BodyDef;
-	BodyDef.type = b2_dynamicBody;										// 동적 객체로 설정 (중력의 영향을 받음)
+	BodyDef.type = b2_dynamicBody;														// 동적 객체로 설정 (중력의 영향을 받음)
 	BodyDef.position.Set(GetActorLocation().X / 30.0f, GetActorLocation().Y / 30.0f);	// 첫 번째 상자의 위치 (x는 -5, y는 5)
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
 	Body = Level->World->CreateBody(&BodyDef);
-
+	Body->GetUserData().pointer = reinterpret_cast<unsigned __int64>(this);
+	
 	// Body Setting
 	b2PolygonShape dynamicBody;
 	FVector BoxScale = { 10.0f, 10.0f };
@@ -38,7 +39,7 @@ void Player::BeginPlay()
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBody;
 	fixtureDef.density = 1.0f;			// 밀도 설정
-	fixtureDef.friction = 0.0f;		// 마찰력 설정
+	fixtureDef.friction = 0.0f;			// 마찰력 설정
 	Body->CreateFixture(&fixtureDef);
 
 	// Collision Setting
@@ -46,7 +47,8 @@ void Player::BeginPlay()
 	Collision->SetColType(ECollisionType::Rect);
 	Collision->SetScale(BoxScale);
 
-	StateChange(EPlayerState::Idle);
+	StateChange(EPlayerState::Falling);
+	Dir = EPlayerDir::Right;
 }
 
 void Player::IdleStart()
@@ -79,11 +81,13 @@ void Player::WalkingStart()
 {
 	if (UEngineInput::IsPress('A'))
 	{
+		Dir = EPlayerDir::Left;
 		Body->SetLinearVelocity({ -10.0f, 0.0f });
 	}
 
 	if (UEngineInput::IsPress('D'))
 	{
+		Dir = EPlayerDir::Right;
 		Body->SetLinearVelocity({ 10.0f, 0.0f });
 	}
 }
@@ -111,17 +115,50 @@ void Player::Walking(float _DeltaTime)
 
 void Player::JumpStart()
 {
-	Body->ApplyLinearImpulseToCenter({ 0.0f, -1.0f }, true);
+	Body->ApplyLinearImpulseToCenter({ 0.0f, -3.0f }, true);
 }
 
 void Player::Jump(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
+	JumpMoveCheck();
+
+	if (UEngineInput::IsDown(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Swing);
+	}
 
 	if (0.0f <= Body->GetLinearVelocity().y)
 	{
 		StateChange(EPlayerState::Falling);
+	}
+}
+
+void Player::JumpMoveCheck()
+{
+	if (UEngineInput::IsPress('A'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ -10.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsUp('A'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ 0.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsPress('D'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ 10.0f, CurVec.y });
+	}
+
+	if (UEngineInput::IsUp('D'))
+	{
+		b2Vec2 CurVec = Body->GetLinearVelocity();
+		Body->SetLinearVelocity({ 0.0f, CurVec.y });
 	}
 }
 
@@ -132,8 +169,9 @@ void Player::SwingStart()
 
 void Player::Swing(float _DeltaTime)
 {
-	PosUpdate();
 	SwingMoveCheck();
+	MaxSpeedCheck();
+	PosUpdate();
 	CameraPosUpdate();
 
 	if (UEngineInput::IsUp(VK_LBUTTON))
@@ -142,14 +180,38 @@ void Player::Swing(float _DeltaTime)
 	}
 }
 
+void Player::MaxSpeedCheck()
+{
+	float CurSpeed = Body->GetLinearVelocity().Length();
+	if (MaxSpeed < CurSpeed)
+	{
+		float Ratio = MaxSpeed / CurSpeed;
+		b2Vec2 NewVelocity = Ratio * Body->GetLinearVelocity();
+		Body->SetLinearVelocity(NewVelocity);
+	}
+}
+
 void Player::SwingMoveCheck()
 {
 	if (UEngineInput::IsDown(VK_SHIFT))
 	{
+		bool isclock = false;
+		if (UEngineInput::IsPress('A'))
+		{
+			isclock = true;
+			Dir = EPlayerDir::Left;
+		}
+
+		if (UEngineInput::IsPress('D'))
+		{
+			isclock = false;
+			Dir = EPlayerDir::Right;
+		}
+
 		b2Vec2 HookPos = AHook->Body->GetPosition();
 		b2Vec2 PlayerPos = Body->GetPosition();
-		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, false);
-		DirVec *= 0.3f;
+		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, isclock);
+		DirVec *= 0.5f;
 		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 
@@ -198,34 +260,42 @@ void Player::Falling(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
+	FallingMoveCheck();
+	MaxSpeedCheck();
+	OnGroundCheck();
 
+	if (UEngineInput::IsDown(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Swing);
+	}
+}
+
+void Player::FallingMoveCheck()
+{
 	if (UEngineInput::IsPress('A'))
 	{
 		b2Vec2 CurVec = Body->GetLinearVelocity();
-		Body->SetLinearVelocity({ -10.0f, CurVec.y });
-	}
-
-	if (UEngineInput::IsUp('A'))
-	{
-		b2Vec2 CurVec = Body->GetLinearVelocity();
-		Body->SetLinearVelocity({ 0.0f, CurVec.y });
+		if (0.0f >= CurVec.x && -10.0f <= CurVec.x )
+		{
+			Body->SetLinearVelocity({ -10.0f, CurVec.y });
+		}
 	}
 
 	if (UEngineInput::IsPress('D'))
 	{
 		b2Vec2 CurVec = Body->GetLinearVelocity();
-		Body->SetLinearVelocity({ 10.0f, CurVec.y });
+		if (0.0f <= CurVec.x && 10.0f >= CurVec.x)
+		{
+			Body->SetLinearVelocity({ 10.0f, CurVec.y });
+		}
 	}
+}
 
-	if (UEngineInput::IsUp('D'))
+void Player::OnGroundCheck()
+{
+	if (0 < IsOnGroundValue)
 	{
-		b2Vec2 CurVec = Body->GetLinearVelocity();
-		Body->SetLinearVelocity({ 0.0f, CurVec.y });
-	}
-
-	if (UEngineInput::IsDown(VK_LBUTTON))
-	{
-		StateChange(EPlayerState::Swing);
+		StateChange(EPlayerState::Idle);
 	}
 }
 
@@ -251,9 +321,15 @@ void Player::CameraPosUpdate()
 void Player::DebugUpdate()
 {
 	b2Vec2 Vel = Body->GetLinearVelocity();
+	b2Vec2 Pos = Body->GetPosition();
 	std::string VelX = "V.x : " + std::to_string(Vel.x);
 	std::string VelY = "V.y : " + std::to_string(Vel.y);
+	std::string speed = "Speed : " + std::to_string(Vel.Length());
+	std::string PosX = "Pos.x : " + std::to_string(Pos.x);
+	std::string PosY = "Pos.y : " + std::to_string(Pos.y);
 	std::string state = "";
+	std::string dir = "";
+	std::string friction = "Friction : " + std::to_string(Body->GetFixtureList()->GetFriction());
 
 	switch (State)
 	{
@@ -279,11 +355,25 @@ void Player::DebugUpdate()
 		state += "Falling";
 		break;
 	}
+	switch (Dir)
+	{
+	case EPlayerDir::Left:
+		dir += "Left";
+		break;
+	case EPlayerDir::Right:
+		dir += "Right";
+		break;
+	}
 
 	UEngineDebug::DebugTextPrint("[Player Body]", 20);
 	UEngineDebug::DebugTextPrint(VelX, 20);
 	UEngineDebug::DebugTextPrint(VelY, 20);
+	UEngineDebug::DebugTextPrint(speed, 20);
+	UEngineDebug::DebugTextPrint(PosX, 20);
+	UEngineDebug::DebugTextPrint(PosY, 20);
 	UEngineDebug::DebugTextPrint(state, 20);
+	UEngineDebug::DebugTextPrint(dir, 20);
+	UEngineDebug::DebugTextPrint(friction, 20);
 }
 
 void Player::Tick(float _DeltaTime)

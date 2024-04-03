@@ -9,8 +9,16 @@ enum class EPlayerState
 	Walking,
 	Jump,
 	Run,
+	Shoot,
 	Swing,
 	Falling,
+};
+
+enum class EPlayerDir
+{
+	None,
+	Left,
+	Right
 };
 
 struct b2Vec2;
@@ -51,6 +59,7 @@ public:
 public:
 	void JumpStart();
 	void Jump(float _DeltaTime);
+	void JumpMoveCheck();
 
 public:
 	void WalkingStart();
@@ -59,7 +68,7 @@ public:
 public:
 	void SwingStart();
 	void Swing(float _DeltaTime);
-	
+	void MaxSpeedCheck();
 	void SwingMoveCheck();
 
 	b2Vec2 GetClockVec(const b2Vec2& _Vec, bool _IsClock);
@@ -67,12 +76,17 @@ public:
 public:
 	void FallingStart();
 	void Falling(float _DeltaTime);
+	void FallingMoveCheck();
+	void OnGroundCheck();
 
 public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
+	float MaxSpeed = 50.0f;
 
 	Hook* AHook = nullptr;
 
+	int IsOnGroundValue = false;
+	EPlayerDir Dir = EPlayerDir::None;
 	EPlayerState State = EPlayerState::None;
 };

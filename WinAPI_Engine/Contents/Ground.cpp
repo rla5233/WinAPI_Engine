@@ -15,16 +15,16 @@ Ground::~Ground()
 void Ground::BeginPlay()
 {
 	AActor::BeginPlay();
+}
 
-	// Actor Setting
-	FVector WinScale = ContentsHelper::GetWindowScale();
-	SetActorLocation({ WinScale.hX(), WinScale.Y * 0.8f });
-
+void Ground::CreateBody()
+{
 	// Body Create
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(GetActorLocation().X / 30.0f, GetActorLocation().Y / 30.0f); // 바닥의 위치 (x는 0, y는 -10)
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
 	Body = Level->World->CreateBody(&groundBodyDef);
+	Body->GetUserData().pointer = reinterpret_cast<unsigned __int64>(this);
 
 	// Body Setting
 	b2PolygonShape groundBox;
