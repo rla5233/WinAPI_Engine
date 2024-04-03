@@ -60,6 +60,7 @@ void Player::Idle(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
+	FallCheck();
 
 	if (UEngineInput::IsDown(VK_LBUTTON))
 	{
@@ -96,6 +97,7 @@ void Player::Walking(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
+	FallCheck();
 
 	if (UEngineInput::IsDown(VK_LBUTTON))
 	{
@@ -113,9 +115,17 @@ void Player::Walking(float _DeltaTime)
 	}
 }
 
+void Player::FallCheck()
+{
+	if (0 == IsOnGroundValue)
+	{
+		StateChange(EPlayerState::Falling);
+	}
+}
+
 void Player::JumpStart()
 {
-	Body->ApplyLinearImpulseToCenter({ 0.0f, -3.0f }, true);
+	Body->ApplyLinearImpulseToCenter({ 0.0f, -1.0f }, true);
 }
 
 void Player::Jump(float _DeltaTime)
@@ -254,19 +264,58 @@ b2Vec2 Player::GetClockVec(const b2Vec2& _Vec, bool _IsClock)
 
 void Player::FallingStart()
 {
+
 }
 
 void Player::Falling(float _DeltaTime)
 {
-	PosUpdate();
-	CameraPosUpdate();
+	FallingSpeedDown();
 	FallingMoveCheck();
 	MaxSpeedCheck();
 	OnGroundCheck();
+	PosUpdate();
+	CameraPosUpdate();
 
 	if (UEngineInput::IsDown(VK_LBUTTON))
 	{
 		StateChange(EPlayerState::Swing);
+	}
+}
+
+void Player::FallingSpeedDown()
+{
+	b2Vec2 CurVel = Body->GetLinearVelocity();
+
+	if (0.0f > CurVel.y)
+	{
+		CurVel.y += 1.0f;
+	}
+
+	if (0.0f <= abs(CurVel.x))
+	{
+		if (0.0f < CurVel.x)
+		{
+			CurVel.x -= 1.0f;
+			if (0.0f > CurVel.x)
+			{
+				CurVel.x = 0.0f;
+			}
+
+			Body->SetLinearVelocity(CurVel);
+			return;
+		}
+
+		if (0.0f > CurVel.x)
+		{
+			CurVel.x += 1.0f;
+			if (0.0f < CurVel.x)
+			{
+				CurVel.x = 0.0f;
+			}
+
+			Body->SetLinearVelocity(CurVel);
+			return;
+		}
 	}
 }
 
@@ -330,6 +379,7 @@ void Player::DebugUpdate()
 	std::string state = "";
 	std::string dir = "";
 	std::string friction = "Friction : " + std::to_string(Body->GetFixtureList()->GetFriction());
+	std::string ground = "Ground : " + std::to_string(IsOnGroundValue);
 
 	switch (State)
 	{
@@ -374,6 +424,7 @@ void Player::DebugUpdate()
 	UEngineDebug::DebugTextPrint(state, 20);
 	UEngineDebug::DebugTextPrint(dir, 20);
 	UEngineDebug::DebugTextPrint(friction, 20);
+	UEngineDebug::DebugTextPrint(ground, 20);
 }
 
 void Player::Tick(float _DeltaTime)

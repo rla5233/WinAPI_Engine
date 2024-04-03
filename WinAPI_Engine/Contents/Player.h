@@ -64,6 +64,7 @@ public:
 public:
 	void WalkingStart();
 	void Walking(float _DeltaTime);
+	void FallCheck();
 
 public:
 	void SwingStart();
@@ -76,6 +77,7 @@ public:
 public:
 	void FallingStart();
 	void Falling(float _DeltaTime);
+	void FallingSpeedDown();
 	void FallingMoveCheck();
 	void OnGroundCheck();
 

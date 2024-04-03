@@ -5,6 +5,7 @@
 #include "Ground.h"
 #include "Player.h"
 #include "Box.h"
+#include "Hook.h"
 
 #include "ThirdParty/Box2d/include/box2d.h"
 
@@ -79,6 +80,12 @@ void TestLevel::ResetPlayer()
 {
 	World->DestroyBody(APlayer->Body);
 	APlayer->Destroy();
+
+	if (nullptr != APlayer->AHook)
+	{
+		APlayer->AHook->Destroy();
+		APlayer->AHook = nullptr;
+	}
 
 	APlayer = SpawnActor<Player>();
 }
