@@ -288,7 +288,7 @@ void Player::FallingSpeedDown()
 
 	if (0.0f > CurVel.y)
 	{
-		CurVel.y += 1.0f;
+		CurVel.y *= 0.9f;
 	}
 
 	if (0.0f <= abs(CurVel.x))

@@ -11,6 +11,7 @@ enum class EPlayerState
 	Run,
 	Shoot,
 	Swing,
+	Flying,
 	Falling,
 };
 
