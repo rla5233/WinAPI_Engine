@@ -62,7 +62,6 @@ void Player::Idle(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
-	FallCheck();
 	ShootCheck();
 
 	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D'))
@@ -95,7 +94,7 @@ void Player::Walking(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
-	FallCheck();
+	WalkingFallCheck();
 	ShootCheck();
 
 	if (UEngineInput::IsUp('A') || UEngineInput::IsUp('D'))
@@ -109,7 +108,7 @@ void Player::Walking(float _DeltaTime)
 	}
 }
 
-void Player::FallCheck()
+void Player::WalkingFallCheck()
 {
 	if (0 == IsOnGroundValue)
 	{
@@ -269,6 +268,14 @@ b2Vec2 Player::GetClockVec(const b2Vec2& _Vec, bool _IsClock)
 	}
 
 	return { Result.x, Result.y };
+}
+
+void Player::FlyStart()
+{
+}
+
+void Player::Flying(float _DeltaTime)
+{
 }
 
 void Player::FallingStart()
