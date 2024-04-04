@@ -6,7 +6,8 @@ enum class EHookState
 {
 	None,
 	Shoot,
-	Hook
+	Return,
+	Hooked
 };
 
 class b2Body;
@@ -26,6 +27,7 @@ public:
 	Hook& operator=(const Hook& _Other) = delete;
 	Hook& operator=(Hook&& _Other) noexcept = delete;
 
+	void PosUpdate();
 	void StateChange(EHookState _State);
 
 protected:
@@ -34,16 +36,31 @@ protected:
 
 	void StateUpdate(float _DeltaTime);
 
-public:
+private:
 	void ShootStart();
 	void Shooting(float _DeltaTime);
+	void HookSetting();
+	void HookShoot();
+	void HookReturnCheck();
 
-public:
+	FVector ShootDir = FVector::Zero;
+	float ShootSpeed = 20.0f;
+	float MaxLength = 200.0f;
+
+private:
+	void ReturnStart();
+	void Return(float _DeltaTime);
+	void HookVelChange();
+	void ReturnEndCheck();
+
+	float MinLength = 20.0f;
+
+private:
 	void HookedStart();
 	void Hooked(float _DeltaTime);
+	void HookedEndCheck();
 	void HookRelease();
 
-	void HookSetting();
 	void JointSetting();
 
 public:
@@ -51,8 +68,5 @@ public:
 	b2Body* Body = nullptr;
 	b2DistanceJoint* Joint = nullptr;
 
-
-	FVector ShootVec = FVector::Zero;
-	float MaxLength = 20.0f;
 	EHookState State = EHookState::None;
 };

@@ -26,8 +26,9 @@ void Player::BeginPlay()
 	
 	// Body Create
 	b2BodyDef BodyDef;
-	BodyDef.type = b2_dynamicBody;														// 동적 객체로 설정 (중력의 영향을 받음)
-	BodyDef.position.Set(GetActorLocation().X / 30.0f, GetActorLocation().Y / 30.0f);	// 첫 번째 상자의 위치 (x는 -5, y는 5)
+	BodyDef.type = b2_dynamicBody;		// 동적 객체로 설정 (중력의 영향을 받음)
+	b2Vec2 pos = ContentsHelper::GetPosWorldtoBox(GetActorLocation());
+	BodyDef.position.Set(pos.x, pos.y);	// 첫 번째 상자의 위치 (x는 -5, y는 5)
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
 	Body = Level->World->CreateBody(&BodyDef);
 	Body->GetUserData().pointer = reinterpret_cast<unsigned __int64>(this);
@@ -35,7 +36,8 @@ void Player::BeginPlay()
 	// Body Setting
 	b2PolygonShape dynamicBody;
 	FVector BoxScale = { 20.0f, 20.0f };
-	dynamicBody.SetAsBox((BoxScale.X * 0.5f) / 30.0f, (BoxScale.Y * 0.5f) / 30.0f);	 // 가로 10, 세로 10인 상자 생성
+	b2Vec2 scale = ContentsHelper::GetScaleWorldtoBox(BoxScale);
+	dynamicBody.SetAsBox(scale.x, scale.y);	 // 가로 10, 세로 10인 상자 생성
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBody;
 	fixtureDef.density = 1.0f;			// 밀도 설정
@@ -117,7 +119,7 @@ void Player::FallCheck()
 
 void Player::JumpStart()
 {
-	Body->ApplyLinearImpulseToCenter({ 0.0f, -1.0f }, true);
+	Body->ApplyLinearImpulseToCenter({ 0.0f, -4.0f }, true);
 }
 
 void Player::Jump(float _DeltaTime)
@@ -356,9 +358,8 @@ void Player::OnGroundCheck()
 
 void Player::PosUpdate()
 {
-	float X = Body->GetPosition().x;
-	float Y = Body->GetPosition().y;
-	SetActorLocation({ X * 30.0f, Y * 30.0f });
+	FVector Pos = ContentsHelper::GetPosBoxtoWorld(Body->GetPosition());
+	SetActorLocation(Pos);
 
 	DebugUpdate();
 }

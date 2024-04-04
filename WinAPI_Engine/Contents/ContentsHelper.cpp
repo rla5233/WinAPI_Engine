@@ -2,6 +2,8 @@
 
 #include "ThirdParty/Box2D/include/box2d.h"
 
+float ContentsHelper::ChangeScale = 30.0f;
+
 ContentsHelper::ContentsHelper()
 {
 }
@@ -47,5 +49,29 @@ FVector ContentsHelper::b2Vec2toFVector(const b2Vec2& _Vec)
 b2Vec2 ContentsHelper::FVectortob2Vec2(const FVector& _Vec)
 {
 	b2Vec2 Result = { _Vec.X, _Vec.Y };
+	return Result;
+}
+
+FVector ContentsHelper::GetPosBoxtoWorld(const b2Vec2& _Vec)
+{
+	FVector Result = { _Vec.x * ChangeScale, _Vec.y * ChangeScale };
+	return Result;
+}
+
+b2Vec2 ContentsHelper::GetPosWorldtoBox(const FVector& _Vec)
+{
+	b2Vec2 Result = { _Vec.X / ChangeScale, _Vec.Y / ChangeScale };
+	return Result;
+}
+
+FVector ContentsHelper::GetScaleBoxtoWorld(const b2Vec2& _Vec)
+{
+	FVector Result = { _Vec.x, _Vec.y };
+	return Result;
+}
+
+b2Vec2 ContentsHelper::GetScaleWorldtoBox(const FVector& _Vec)
+{
+	b2Vec2 Result = { (_Vec.X * 0.5f) / 30.0f, (_Vec.Y * 0.5f) / 30.0f };
 	return Result;
 }
