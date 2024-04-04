@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ThirdParty/Box2D/include/box2d.h"
+#include "ThirdParty/Box2D/inc/box2d.h"
 
 // Ό³Έν :
 class ContactListener : public b2ContactListener

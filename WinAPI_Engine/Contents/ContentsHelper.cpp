@@ -1,6 +1,6 @@
 #include "ContentsHelper.h"
 
-#include "ThirdParty/Box2D/include/box2d.h"
+#include "ThirdParty/Box2D/inc/box2d.h"
 
 float ContentsHelper::ChangeScale = 30.0f;
 
