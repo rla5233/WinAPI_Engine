@@ -9,8 +9,17 @@ enum class EPlayerState
 	Walking,
 	Jump,
 	Run,
+	Shoot,
 	Swing,
+	Flying,
 	Falling,
+};
+
+enum class EPlayerDir
+{
+	None,
+	Left,
+	Right
 };
 
 struct b2Vec2;
@@ -31,6 +40,7 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+
 public:
 	void PosUpdate();
 	void CameraPosUpdate();
@@ -38,41 +48,58 @@ public:
 
 	void StateChange(EPlayerState _State);
 
-public:
+protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 	void StateUpdate(float _DeltaTime);
 
-public:
+private:
 	void IdleStart();
 	void Idle(float _DeltaTime);
 
-public:
+private:
 	void JumpStart();
 	void Jump(float _DeltaTime);
+	void JumpMoveCheck();
 
-public:
+private:
 	void WalkingStart();
 	void Walking(float _DeltaTime);
+	void WalkingFallCheck();
 
-public:
+private:
+	void ShootCheck();
+	void ShootStart();
+	void Shoot(float _DeltaTime);
+
+private:
 	void SwingStart();
 	void Swing(float _DeltaTime);
-	
+	void MaxSpeedCheck();
 	void SwingMoveCheck();
 
 	b2Vec2 GetClockVec(const b2Vec2& _Vec, bool _IsClock);
 
-public:
+private:
+	void FlyStart();
+	void Flying(float _DeltaTime);
+
+private:
 	void FallingStart();
 	void Falling(float _DeltaTime);
+	void FallingSpeedDown();
+	void FallingMoveCheck();
+	void OnGroundCheck();
 
 public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
+	float MaxSpeed = 50.0f;
 
 	Hook* AHook = nullptr;
 
+	int IsOnGroundValue = false;
+	EPlayerDir Dir = EPlayerDir::None;
 	EPlayerState State = EPlayerState::None;
-};
+}; // EndPlayer

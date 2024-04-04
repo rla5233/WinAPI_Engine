@@ -174,6 +174,9 @@
     <ClInclude Include="Hook.h">
       <Filter>Object\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="ContactListener.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="Hook.cpp">
       <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactListener.cpp">
+      <Filter>Helper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

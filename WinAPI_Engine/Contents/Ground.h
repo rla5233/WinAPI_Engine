@@ -18,6 +18,8 @@ public:
 	Ground& operator=(const Ground& _Other) = delete;
 	Ground& operator=(Ground&& _Other) noexcept = delete;
 
+	void CreateBody(const FVector& Scale = { 800.0f, 10.0f });
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

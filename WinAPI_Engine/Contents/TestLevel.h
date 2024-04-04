@@ -1,6 +1,8 @@
 #pragma once
 #include <EngineCore/Level.h>
+#include <vector>
 
+class ContactListener;
 class b2World;
 class Ground;
 class Player;
@@ -29,9 +31,10 @@ protected:
 
 public:
 	b2World* World = nullptr;
+	ContactListener* Contact = nullptr;
 
 	Player* APlayer = nullptr;
-	Ground* GroundBox = nullptr;
+	std::vector<Ground*> AllGround;
 
 
 	Box* ABox = nullptr;
