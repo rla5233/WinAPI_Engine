@@ -1,13 +1,14 @@
 #include "Hook.h"
 
 #include "ContentsHelper.h"
-#include "ThirdParty/Box2d/include/box2d.h"
+#include "ThirdParty/Box2d/inc/box2d.h"
 #include "TestLevel.h"
 
 #include "Player.h"
 
 #include <EnginePlatform/EngineInput.h>
 
+#pragma comment(lib, "box2d.lib")
 
 Hook::Hook()
 {

@@ -3,10 +3,11 @@
 #include "ContentsHelper.h"
 #include "TestLevel.h"
 #include "Hook.h"
-#include "ThirdParty/Box2d/include/box2d.h"
-
+#include "ThirdParty/Box2d/inc/box2d.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineDebug.h>
+
+#pragma comment(lib, "box2d.lib")
 
 Player::Player()
 {

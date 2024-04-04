@@ -5,7 +5,9 @@
 #include "Player.h"
 #include "Box.h"
 
-#include "ThirdParty/Box2d/include/box2d.h"
+#include "ThirdParty/Box2d/inc/box2d.h"
+
+#pragma comment(lib, "box2d.lib")
 
 TestLevel::TestLevel()
 {
