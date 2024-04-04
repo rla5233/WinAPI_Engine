@@ -34,7 +34,7 @@ void Player::BeginPlay()
 	
 	// Body Setting
 	b2PolygonShape dynamicBody;
-	FVector BoxScale = { 10.0f, 10.0f };
+	FVector BoxScale = { 20.0f, 20.0f };
 	dynamicBody.SetAsBox((BoxScale.X * 0.5f) / 30.0f, (BoxScale.Y * 0.5f) / 30.0f);	 // 가로 10, 세로 10인 상자 생성
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBody;
@@ -61,11 +61,7 @@ void Player::Idle(float _DeltaTime)
 	PosUpdate();
 	CameraPosUpdate();
 	FallCheck();
-
-	if (UEngineInput::IsDown(VK_LBUTTON))
-	{
-		StateChange(EPlayerState::Swing);
-	}
+	ShootCheck();
 
 	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D'))
 	{
@@ -98,11 +94,7 @@ void Player::Walking(float _DeltaTime)
 	PosUpdate();
 	CameraPosUpdate();
 	FallCheck();
-
-	if (UEngineInput::IsDown(VK_LBUTTON))
-	{
-		StateChange(EPlayerState::Swing);
-	}
+	ShootCheck();
 
 	if (UEngineInput::IsUp('A') || UEngineInput::IsUp('D'))
 	{
@@ -133,11 +125,7 @@ void Player::Jump(float _DeltaTime)
 	PosUpdate();
 	CameraPosUpdate();
 	JumpMoveCheck();
-
-	if (UEngineInput::IsDown(VK_LBUTTON))
-	{
-		StateChange(EPlayerState::Swing);
-	}
+	ShootCheck();
 
 	if (0.0f <= Body->GetLinearVelocity().y)
 	{
@@ -171,6 +159,28 @@ void Player::JumpMoveCheck()
 		Body->SetLinearVelocity({ 0.0f, CurVec.y });
 	}
 }
+
+void Player::ShootCheck()
+{
+	if (UEngineInput::IsDown(VK_LBUTTON))
+	{
+		StateChange(EPlayerState::Shoot);
+	}
+}
+
+void Player::ShootStart()
+{
+	AHook = GetWorld()->SpawnActor<Hook>();
+}
+
+void Player::Shoot(float _DeltaTime)
+{
+	PosUpdate();
+	CameraPosUpdate();
+
+
+}
+
 
 void Player::SwingStart()
 {
@@ -275,11 +285,7 @@ void Player::Falling(float _DeltaTime)
 	OnGroundCheck();
 	PosUpdate();
 	CameraPosUpdate();
-
-	if (UEngineInput::IsDown(VK_LBUTTON))
-	{
-		StateChange(EPlayerState::Swing);
-	}
+	ShootCheck();
 }
 
 void Player::FallingSpeedDown()
@@ -376,33 +382,33 @@ void Player::DebugUpdate()
 	std::string speed = "Speed : " + std::to_string(Vel.Length());
 	std::string PosX = "Pos.x : " + std::to_string(Pos.x);
 	std::string PosY = "Pos.y : " + std::to_string(Pos.y);
-	std::string state = "";
+	std::string state = "None";
 	std::string dir = "";
 	std::string friction = "Friction : " + std::to_string(Body->GetFixtureList()->GetFriction());
 	std::string ground = "Ground : " + std::to_string(IsOnGroundValue);
 
 	switch (State)
 	{
-	case EPlayerState::None:
-		state += "None";
-		break;
 	case EPlayerState::Idle:
-		state += "Idle";
+		state = "Idle";
 		break;
 	case EPlayerState::Walking:
-		state += "Walking";
+		state = "Walking";
 		break;
 	case EPlayerState::Jump:
-		state += "Jump";
+		state = "Jump";
 		break;
 	case EPlayerState::Run:
-		state += "Run";
+		state = "Run";
+		break;
+	case EPlayerState::Shoot:
+		state = "Shoot";
 		break;
 	case EPlayerState::Swing:
-		state += "Swing";
+		state = "Swing";
 		break;
 	case EPlayerState::Falling:
-		state += "Falling";
+		state = "Falling";
 		break;
 	}
 	switch (Dir)
@@ -449,6 +455,9 @@ void Player::StateUpdate(float _DeltaTime)
 		break;
 	case EPlayerState::Run:
 		break;
+	case EPlayerState::Shoot:
+		Shoot(_DeltaTime);
+		break;
 	case EPlayerState::Swing:
 		Swing(_DeltaTime);
 		break;
@@ -474,6 +483,9 @@ void Player::StateChange(EPlayerState _State)
 			JumpStart();
 			break;
 		case EPlayerState::Run:
+			break;
+		case EPlayerState::Shoot:
+			ShootStart();
 			break;
 		case EPlayerState::Swing:
 			SwingStart();

@@ -1,5 +1,7 @@
 #include "ContentsHelper.h"
 
+#include "ThirdParty/Box2D/include/box2d.h"
+
 ContentsHelper::ContentsHelper()
 {
 }
@@ -33,5 +35,17 @@ float ContentsHelper::GetVecSize(const FVector& _Vec)
 	float Result = 0;
 	Result = powf(_Vec.X, 2) + powf(_Vec.Y, 2);
 	Result = std::sqrtf(Result);
+	return Result;
+}
+
+FVector ContentsHelper::b2Vec2toFVector(const b2Vec2& _Vec)
+{
+	FVector Result = { _Vec.x, _Vec.y };
+	return Result;
+}
+
+b2Vec2 ContentsHelper::FVectortob2Vec2(const FVector& _Vec)
+{
+	b2Vec2 Result = { _Vec.X, _Vec.Y };
 	return Result;
 }

@@ -68,6 +68,11 @@ public:
 	void FallCheck();
 
 public:
+	void ShootCheck();
+	void ShootStart();
+	void Shoot(float _DeltaTime);
+
+public:
 	void SwingStart();
 	void Swing(float _DeltaTime);
 	void MaxSpeedCheck();

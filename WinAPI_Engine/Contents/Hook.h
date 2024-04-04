@@ -35,8 +35,13 @@ protected:
 	void StateUpdate(float _DeltaTime);
 
 public:
-	void HookStart();
+	void ShootStart();
+	void Shooting(float _DeltaTime);
+
+public:
+	void HookedStart();
 	void Hooked(float _DeltaTime);
+	void HookRelease();
 
 	void HookSetting();
 	void JointSetting();
@@ -46,5 +51,8 @@ public:
 	b2Body* Body = nullptr;
 	b2DistanceJoint* Joint = nullptr;
 
+
+	FVector ShootVec = FVector::Zero;
+	float MaxLength = 20.0f;
 	EHookState State = EHookState::None;
 };
