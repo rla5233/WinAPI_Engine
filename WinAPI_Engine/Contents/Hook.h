@@ -44,7 +44,7 @@ private:
 	void HookReturnCheck();
 
 	FVector ShootDir = FVector::Zero;
-	float ShootSpeed = 50.0f;
+	float ShootSpeed = 100.0f;
 	float MaxLength = 300.0f;
 
 private:
