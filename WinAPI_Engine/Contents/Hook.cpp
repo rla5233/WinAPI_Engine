@@ -37,6 +37,7 @@ void Hook::Shooting(float _DeltaTime)
 	if (true == IsHooked)
 	{
 		StateChange(EHookState::Hooked);
+		return;
 	}	
 
 	HookReturnCheck();
@@ -60,7 +61,7 @@ void Hook::HookSetting()
 	b2BodyDef BodyDef;
 	BodyDef.type = b2_dynamicBody;
 	BodyDef.gravityScale = 0.0f;
-	b2Vec2 pos = ContentsHelper::GetPosWorldtoBox(GetActorLocation());
+	b2Vec2 pos = ContentsHelper::GetPosWorldtoBox(GetActorLocation() + ShootDir * MinLength);
 	BodyDef.position.Set(pos.x, pos.y);
 	Body = Level->World->CreateBody(&BodyDef);
 	Body->GetUserData().pointer = reinterpret_cast<unsigned __int64>(this);
@@ -171,8 +172,7 @@ void Hook::JointSetting()
 
 	b2DistanceJointDef jointDef;
 	jointDef.Initialize(Body, Level->APlayer->Body, Body->GetPosition(), Level->APlayer->Body->GetPosition());
-	//jointDef.minLength = 0.0f;
-	//jointDef.maxLength = 1.0f;
+	jointDef.minLength = 0.0f;
 	jointDef.collideConnected = true;	
 	Joint = (b2DistanceJoint*)Level->World->CreateJoint(&jointDef);
 }

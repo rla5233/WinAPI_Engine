@@ -27,7 +27,7 @@ void TestLevel::BeginPlay()
 	FVector WinScale = ContentsHelper::GetWindowScale();
 	
 	// World Setting
-	b2Vec2 gravity(0.0f, 20.0f);
+	b2Vec2 gravity(0.0f, 15.0f);
 	World = new b2World(gravity);
 	
 
@@ -54,9 +54,15 @@ void TestLevel::BeginPlay()
 	AllGround[3]->SetActorLocation({ WinScale.hX() + WinScale.X * 0.7f, WinScale.Y * 0.2f });
 	AllGround[3]->CreateBody();
 
+	AllGround.push_back(SpawnActor<Ground>());
+	AllGround[4]->SetActorLocation({ WinScale.hX() + WinScale.X * 1.4f, WinScale.Y * 0.8f });
+	AllGround[4]->CreateBody();
+
+	AllGround.push_back(SpawnActor<Ground>());
+	AllGround[5]->SetActorLocation({ WinScale.hX() + WinScale.X * 1.4f, WinScale.Y * 0.2f });
+	AllGround[5]->CreateBody({ 20.0f, 20.0f });
+
 	GEngine->EngineDebugSwitch();
-
-
 }
 
 void TestLevel::Tick(float _DeltaTime)

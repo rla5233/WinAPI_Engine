@@ -230,7 +230,7 @@ void Player::SwingMoveCheck()
 		b2Vec2 HookPos = AHook->Body->GetPosition();
 		b2Vec2 PlayerPos = Body->GetPosition();
 		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, isclock);
-		DirVec *= 0.5f;
+		DirVec *= 1.0f;
 		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 
@@ -239,7 +239,7 @@ void Player::SwingMoveCheck()
 		b2Vec2 HookPos = AHook->Body->GetPosition();
 		b2Vec2 PlayerPos = Body->GetPosition();
 		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, true);
-		DirVec *= 0.004f;
+		DirVec *= 0.008f;
 		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 
@@ -248,7 +248,7 @@ void Player::SwingMoveCheck()
 		b2Vec2 HookPos = AHook->Body->GetPosition();
 		b2Vec2 PlayerPos = Body->GetPosition();
 		b2Vec2 DirVec = GetClockVec(PlayerPos - HookPos, false);
-		DirVec *= 0.004f;
+		DirVec *= 0.008f;
 		Body->ApplyLinearImpulseToCenter(DirVec, true);
 	}
 }
@@ -357,7 +357,6 @@ void Player::PosUpdate()
 {
 	FVector Pos = ContentsHelper::GetPosBoxtoWorld(Body->GetPosition());
 	SetActorLocation(Pos);
-
 	DebugUpdate();
 }
 
