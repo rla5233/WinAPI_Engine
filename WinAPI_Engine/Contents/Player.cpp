@@ -119,7 +119,7 @@ void Player::FallCheck()
 
 void Player::JumpStart()
 {
-	Body->ApplyLinearImpulseToCenter({ 0.0f, -4.0f }, true);
+	Body->ApplyLinearImpulseToCenter({ 0.0f, -8.0f }, true);
 }
 
 void Player::Jump(float _DeltaTime)
@@ -179,14 +179,11 @@ void Player::Shoot(float _DeltaTime)
 {
 	PosUpdate();
 	CameraPosUpdate();
-
-
 }
 
 
 void Player::SwingStart()
 {
-	AHook = GetWorld()->SpawnActor<Hook>();
 }
 
 void Player::Swing(float _DeltaTime)

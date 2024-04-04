@@ -23,6 +23,9 @@ private:
 	void PlayerGroundOffCheck(b2Contact* _Contact);
 
 private:
+	void HookedCheck(b2Contact* _Contact);
+
+private:
 	void EndContact(b2Contact*_Contact) override;
 	void BeginContact(b2Contact* _Contact) override;
 

@@ -78,14 +78,24 @@ void TestLevel::Tick(float _DeltaTime)
 
 void TestLevel::ResetPlayer()
 {
-	World->DestroyBody(APlayer->Body);
-	APlayer->Destroy();
-
+	// Hook Release
 	if (nullptr != APlayer->AHook)
 	{
+		if (nullptr != APlayer->AHook->Body)
+		{
+			World->DestroyBody(APlayer->AHook->Body);
+			APlayer->AHook->Body = nullptr;
+		}
+
 		APlayer->AHook->Destroy();
 		APlayer->AHook = nullptr;
 	}
+
+	// Actor Release
+	World->DestroyBody(APlayer->Body);
+	APlayer->Body = nullptr;
+	APlayer->Destroy();
+	APlayer = nullptr;
 
 	APlayer = SpawnActor<Player>();
 }

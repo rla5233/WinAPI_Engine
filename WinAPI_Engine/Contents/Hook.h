@@ -44,29 +44,34 @@ private:
 	void HookReturnCheck();
 
 	FVector ShootDir = FVector::Zero;
-	float ShootSpeed = 20.0f;
-	float MaxLength = 200.0f;
+	float ShootSpeed = 30.0f;
+	float MaxLength = 400.0f;
 
 private:
 	void ReturnStart();
 	void Return(float _DeltaTime);
 	void HookVelChange();
+	void ReturnVelUpdate();
 	void ReturnEndCheck();
 
-	float MinLength = 20.0f;
+	float MinLength = 30.0f;
 
 private:
 	void HookedStart();
 	void Hooked(float _DeltaTime);
+	void JointSetting();
+	void HookedPosUpdate();
 	void HookedEndCheck();
 	void HookRelease();
 
-	void JointSetting();
+	// 실제값은 b2Vec
+	FVector HookedPos = FVector::Zero;
 
 public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
 	b2DistanceJoint* Joint = nullptr;
 
+	bool IsHooked = false;
 	EHookState State = EHookState::None;
 };

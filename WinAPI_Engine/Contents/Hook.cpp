@@ -33,6 +33,12 @@ void Hook::ShootStart()
 void Hook::Shooting(float _DeltaTime)
 {
 	PosUpdate();
+
+	if (true == IsHooked)
+	{
+		StateChange(EHookState::Hooked);
+	}	
+
 	HookReturnCheck();
 }
 
@@ -48,6 +54,7 @@ void Hook::HookSetting()
 	ShootDir = GEngine->MainWindow.GetMousePosition();
 	ShootDir += Level->GetCameraPos();
 	ShootDir -= PlayerPos;
+	ShootDir.Normalize2D();
 
 	// Body Create
 	b2BodyDef BodyDef;
@@ -56,7 +63,8 @@ void Hook::HookSetting()
 	b2Vec2 pos = ContentsHelper::GetPosWorldtoBox(GetActorLocation());
 	BodyDef.position.Set(pos.x, pos.y);
 	Body = Level->World->CreateBody(&BodyDef);
-
+	Body->GetUserData().pointer = reinterpret_cast<unsigned __int64>(this);
+		
 	// Body Setting
 	b2PolygonShape dynamicBox;
 	FVector BoxScale = { 10.0f, 10.0f };
@@ -76,7 +84,6 @@ void Hook::HookSetting()
 void Hook::HookShoot()
 {
 	b2Vec2 Dir = ContentsHelper::FVectortob2Vec2(ShootDir);
-	Dir.Normalize();
 	Body->SetLinearVelocity({ Dir.x * ShootSpeed, Dir.y * ShootSpeed });
 }
 
@@ -95,10 +102,12 @@ void Hook::HookReturnCheck()
 void Hook::ReturnStart()
 {
 	HookVelChange();
+	Body->GetFixtureList()->SetSensor(false);
 }
 
 void Hook::Return(float _DeltaTime)
 {
+	ReturnVelUpdate();
 	PosUpdate();
 	ReturnEndCheck();
 }
@@ -110,6 +119,17 @@ void Hook::HookVelChange()
 	Body->SetLinearVelocity(CurVel);
 }
 
+void Hook::ReturnVelUpdate()
+{
+	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
+	FVector PlayerPos = Level->APlayer->GetActorLocation();
+	FVector Dir = PlayerPos - GetActorLocation();
+	b2Vec2 dir = ContentsHelper::FVectortob2Vec2(Dir);
+	dir.Normalize();
+	b2Vec2 CurVel = Body->GetLinearVelocity();
+	Body->SetLinearVelocity({ dir.x * CurVel.Length(), dir.y * CurVel.Length() });
+}
+
 void Hook::ReturnEndCheck()
 {
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
@@ -119,18 +139,21 @@ void Hook::ReturnEndCheck()
 	if (MinLength > Diff)
 	{
 		HookRelease();
+		Level->APlayer->StateChange(EPlayerState::Idle);
 	}
 }
 
 void Hook::HookedStart()
 {
-
+	Body->SetLinearVelocity({ 0.0f, 0.0f });
+	HookedPos = ContentsHelper::b2Vec2toFVector(Body->GetPosition());
 	JointSetting();	
 }
 
 void Hook::Hooked(float _DeltaTime)
 {
-
+	HookedPosUpdate();
+	HookedEndCheck();
 }
 
 void Hook::HookedEndCheck()
@@ -144,12 +167,22 @@ void Hook::HookedEndCheck()
 void Hook::JointSetting()
 {
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
+	Level->APlayer->StateChange(EPlayerState::Swing);
 
 	b2DistanceJointDef jointDef;
 	jointDef.Initialize(Body, Level->APlayer->Body, Body->GetPosition(), Level->APlayer->Body->GetPosition());
 	//jointDef.minLength = 0.0f;
+	//jointDef.maxLength = 1.0f;
 	jointDef.collideConnected = true;	
 	Joint = (b2DistanceJoint*)Level->World->CreateJoint(&jointDef);
+}
+
+void Hook::HookedPosUpdate()
+{
+	Body->SetLinearVelocity({ 0.0f, 0.0f });
+	b2Vec2 Pos = ContentsHelper::FVectortob2Vec2(HookedPos);
+	Body->SetTransform(Pos, 0.0f);
+	PosUpdate();
 }
 
 void Hook::PosUpdate()
