@@ -12,6 +12,7 @@ enum class EHookState
 
 class b2Body;
 class b2DistanceJoint;
+class Chain;
 
 // Ό³Έν :
 class Hook : public AActor
@@ -41,11 +42,13 @@ private:
 	void Shooting(float _DeltaTime);
 	void HookSetting();
 	void HookShoot();
+	void CreateChain(const FVector& _Pos);
 	void HookReturnCheck();
 
 	FVector ShootDir = FVector::Zero;
 	float ShootSpeed = 100.0f;
 	float MaxLength = 300.0f;
+	bool CreateChainStart = false;
 
 private:
 	void ReturnStart();
@@ -71,6 +74,8 @@ public:
 	UCollision* Collision = nullptr;
 	b2Body* Body = nullptr;
 	b2DistanceJoint* Joint = nullptr;
+
+	std::list<Chain*> ChainList;
 
 	bool IsHooked = false;
 	EHookState State = EHookState::None;

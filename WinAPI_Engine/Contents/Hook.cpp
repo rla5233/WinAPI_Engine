@@ -5,6 +5,7 @@
 #include "TestLevel.h"
 
 #include "Player.h"
+#include "Chain.h"
 
 #include <EnginePlatform/EngineInput.h>
 
@@ -33,7 +34,10 @@ void Hook::ShootStart()
 
 void Hook::Shooting(float _DeltaTime)
 {
+	FVector PrevPos = GetActorLocation();
 	PosUpdate();
+	
+	CreateChain(PrevPos);
 
 	if (true == IsHooked)
 	{
@@ -89,6 +93,19 @@ void Hook::HookShoot()
 	Body->SetLinearVelocity({ Dir.x * ShootSpeed, Dir.y * ShootSpeed });
 }
 
+void Hook::CreateChain(const FVector& _Pos)
+{
+	if (false == CreateChainStart)
+	{
+		CreateChainStart = true;
+		return;
+	}
+
+	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
+	Chain* NewChain = Level->SpawnActor<Chain>();
+	NewChain->SetActorLocation(_Pos);
+}
+
 void Hook::HookReturnCheck()
 {
 	TestLevel* Level = dynamic_cast<TestLevel*>(GetWorld());
@@ -97,7 +114,8 @@ void Hook::HookReturnCheck()
 	float Diff = ContentsHelper::GetDistace(GetActorLocation(), PlayerPos);
 	if (MaxLength < Diff)
 	{
-		StateChange(EHookState::Return);
+		Body->SetLinearVelocity({ 0.0f, 0.0f });
+		//StateChange(EHookState::Return);
 	}
 }
 
