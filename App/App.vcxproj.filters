@@ -4,10 +4,40 @@
     <Filter Include="App">
       <UniqueIdentifier>{5838c8c9-8254-4ccb-a732-41145789b631}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{f5cbcc6a-fe9d-4314-93f0-b585833a0c8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="..\EnginePlatform\Main.cpp">
       <Filter>App</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\EnginePlatform\targetver.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EnginePlatform\Main.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EnginePlatform\framework.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EnginePlatform\Resource.h">
+      <Filter>App</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\EnginePlatform\small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\EnginePlatform\EnginePlatform.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\EnginePlatform\EnginePlatform.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

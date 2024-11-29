@@ -143,22 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EnginePlatform.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="EnginePlatform.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="EnginePlatform.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="EnginePlatform.ico" />
-    <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\EngineBase\EngineBase.vcxproj">
       <Project>{627a4a25-2135-4fc5-add7-a3588dfa60fb}</Project>
     </ProjectReference>

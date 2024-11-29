@@ -143,7 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\EnginePlatform\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ContentsCore\ContentsCore.vcxproj">
@@ -158,6 +158,19 @@
     <ProjectReference Include="..\EnginePlatform\EnginePlatform.vcxproj">
       <Project>{9c6a6feb-821c-4dff-804f-aed6e4f8f52d}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\EnginePlatform\Main.h" />
+    <ClInclude Include="..\EnginePlatform\framework.h" />
+    <ClInclude Include="..\EnginePlatform\Resource.h" />
+    <ClInclude Include="..\EnginePlatform\targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\EnginePlatform\EnginePlatform.ico" />
+    <Image Include="..\EnginePlatform\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\EnginePlatform\EnginePlatform.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
