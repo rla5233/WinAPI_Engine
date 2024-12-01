@@ -15,40 +15,40 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
-{
-
-    // 전역 문자열을 초기화합니다.
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_ENGINEPLATFORM, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
-
-    // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
-
-    // 단축키 설정
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ENGINEPLATFORM));
-
-    MSG msg;
-
-    // 기본 메시지 루프입니다
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
-
-    return (int) msg.wParam;
-}
+//int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+//                     _In_opt_ HINSTANCE hPrevInstance,
+//                     _In_ LPWSTR    lpCmdLine,
+//                     _In_ int       nCmdShow)
+//{
+//
+//    // 전역 문자열을 초기화합니다.
+//    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+//    LoadStringW(hInstance, IDC_ENGINEPLATFORM, szWindowClass, MAX_LOADSTRING);
+//    MyRegisterClass(hInstance);
+//
+//    // 애플리케이션 초기화를 수행합니다:
+//    if (!InitInstance (hInstance, nCmdShow))
+//    {
+//        return FALSE;
+//    }
+//
+//    // 단축키 설정
+//    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ENGINEPLATFORM));
+//
+//    MSG msg;
+//
+//    // 기본 메시지 루프입니다
+//    while (GetMessage(&msg, nullptr, 0, 0))
+//    {
+//        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+//        {
+//            TranslateMessage(&msg);
+//            DispatchMessage(&msg);
+//        }
+//    }
+//
+//    return (int) msg.wParam;
+//}
 
 
 

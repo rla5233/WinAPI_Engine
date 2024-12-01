@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>

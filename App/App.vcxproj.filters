@@ -18,6 +18,9 @@
     <ClCompile Include="CMain.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">

@@ -1,4 +1,5 @@
 #pragma once
+#include <EnginePlatform/EngineWindow.h>
 
 // EngineCore Class
 class EngineCore
@@ -14,19 +15,16 @@ public:
 	EngineCore& operator=(const EngineCore& _Other) = delete;
 	EngineCore& operator=(EngineCore&& _Other) noexcept = delete;
 
+public:
+	template<typename T>
+	static void Start()
+	{
+
+	}
 
 protected:
 
 private:
+	static UEngineWindow MainWindow;
 
 };
-
-//#define ENGINESTART() \
-//int APIENTRY wWinMain(_In_ HINSTANCE hInstance, \
-//	_In_opt_ HINSTANCE hPrevInstance, \
-//	_In_ LPWSTR    lpCmdLine, \
-//	_In_ int       nCmdShow) \
-//{ \
-//	LEAKCHECK; \
-//
-//}
