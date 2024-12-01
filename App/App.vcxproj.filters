@@ -7,36 +7,45 @@
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{f5cbcc6a-fe9d-4314-93f0-b585833a0c8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{3b75742f-befc-4753-8b1a-78580b6d67a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\EnginePlatform\Main.cpp">
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>App</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\EnginePlatform\targetver.h">
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="..\EnginePlatform\Main.h">
+    <ClInclude Include="Main.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="..\EnginePlatform\framework.h">
+    <ClInclude Include="Resource.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="..\EnginePlatform\Resource.h">
+    <ClInclude Include="targetver.h">
       <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\EnginePlatform\small.ico">
+    <Image Include="EnginePlatform.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\EnginePlatform\EnginePlatform.ico">
+    <Image Include="small.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\EnginePlatform\EnginePlatform.rc">
+    <ResourceCompile Include="EnginePlatform.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>

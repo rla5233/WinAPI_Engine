@@ -4,5 +4,18 @@
     <Filter Include="Core">
       <UniqueIdentifier>{65b0633f-d73f-4829-98a2-4f14772f95bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{32cb226e-148b-4c8e-a8d1-c84938d52c13}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
