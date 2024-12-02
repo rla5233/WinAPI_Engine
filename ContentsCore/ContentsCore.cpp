@@ -1,10 +1,10 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
 
-ContentsCore::ContentsCore()
+UContentsCore::UContentsCore()
 {
 }
 
-ContentsCore::~ContentsCore()
+UContentsCore::~UContentsCore()
 {
 }

@@ -1,10 +1,19 @@
 #include "PreCompile.h"
 #include "EngineCore.h"
 
-EngineCore::EngineCore()
+UEngineCore::UEngineCore()
 {
 }
 
-EngineCore::~EngineCore()
+UEngineCore::~UEngineCore()
 {
+}
+
+void UEngineCore::EngineStart(HINSTANCE _Inst)
+{
+	LEAKCHECK;
+
+	MainWindow.Init(_Inst);
+
+	MainWindow.MessageRoop();
 }

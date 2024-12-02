@@ -1,28 +1,30 @@
 #pragma once
 #include <EnginePlatform/EngineWindow.h>
 
-// EngineCore Class
-class EngineCore
+// UEngineCore Class
+class UEngineCore
 {
 public:
 	// constructor destructor
-	EngineCore();
-	~EngineCore();
+	UEngineCore();
+	~UEngineCore();
 	
 	// delete Function
-	EngineCore(const EngineCore& _Other) = delete;
-	EngineCore(EngineCore&& _Other) noexcept = delete;
-	EngineCore& operator=(const EngineCore& _Other) = delete;
-	EngineCore& operator=(EngineCore&& _Other) noexcept = delete;
+	UEngineCore(const UEngineCore& _Other) = delete;
+	UEngineCore(UEngineCore&& _Other) noexcept = delete;
+	UEngineCore& operator=(const UEngineCore& _Other) = delete;
+	UEngineCore& operator=(UEngineCore&& _Other) noexcept = delete;
 
 public:
 	template<typename T>
-	static void Start()
+	static void Start(HINSTANCE _Inst)
 	{
-
+		UEngineCore Core;
+		Core.EngineStart(_Inst);
 	}
 
-protected:
+private:
+	void EngineStart(HINSTANCE _Inst);
 
 private:
 	static UEngineWindow MainWindow;

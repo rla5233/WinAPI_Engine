@@ -2,22 +2,25 @@
 #include <EngineCore/EngineCore.h>
 
 // Contents Core Class
-class ContentsCore : public EngineCore
+class UContentsCore : public UEngineCore
 {
 public:
 	// constructor destructor
-	ContentsCore();
-	~ContentsCore();
+	UContentsCore();
+	~UContentsCore();
 	
 	// delete Function
-	ContentsCore(const ContentsCore& _Other) = delete;
-	ContentsCore(ContentsCore&& _Other) noexcept = delete;
-	ContentsCore& operator=(const ContentsCore& _Other) = delete;
-	ContentsCore& operator=(ContentsCore&& _Other) noexcept = delete;
+	UContentsCore(const UContentsCore& _Other) = delete;
+	UContentsCore(UContentsCore&& _Other) noexcept = delete;
+	UContentsCore& operator=(const UContentsCore& _Other) = delete;
+	UContentsCore& operator=(UContentsCore&& _Other) noexcept = delete;
 
-protected:
+public:
+
 
 private:
+
+
 
 };
 
