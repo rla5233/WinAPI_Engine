@@ -2,7 +2,7 @@
 #include <EngineCore/EngineCore.h>
 
 // Contents Core Class
-class UContentsCore : public UEngineCore
+class UContentsCore : public UUserCore
 {
 public:
 	// constructor destructor

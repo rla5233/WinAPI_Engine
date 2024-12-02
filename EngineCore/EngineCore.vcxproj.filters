@@ -15,12 +15,18 @@
     <ClInclude Include="EngineCore.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="UserCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
     <ClCompile Include="EngineCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="UserCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -81,7 +81,6 @@ int UEngineWindow::MessageRoop()
 {
     MSG msg;
 
-    // 기본 메세지 루프
     while (GetMessage(&msg, nullptr, 0, 0))
     {
         TranslateMessage(&msg);

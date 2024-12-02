@@ -1,7 +1,10 @@
 #pragma once
 #include <EnginePlatform/EngineWindow.h>
+#include <EngineCore/UserCore.h>
 
-// UEngineCore Class
+class UUserCore;
+
+// EngineCore Class
 class UEngineCore
 {
 public:
@@ -20,6 +23,8 @@ public:
 	static void Start(HINSTANCE _Inst)
 	{
 		UEngineCore Core;
+		T UserCore;
+		Core.UserCorePtr = &UserCore;
 		Core.EngineStart(_Inst);
 	}
 
@@ -28,5 +33,6 @@ private:
 
 private:
 	static UEngineWindow MainWindow;
+	UUserCore* UserCorePtr = nullptr;
 
 };
