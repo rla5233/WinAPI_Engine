@@ -22,14 +22,15 @@ public:
 	template<typename T>
 	static void Start(HINSTANCE _Inst)
 	{
+		LEAKCHECK;
 		UEngineCore Core;
 		T UserCore;
 		Core.UserCorePtr = &UserCore;
-		Core.EngineStart(_Inst);
+		Core.EngineInit(_Inst);
 	}
 
 private:
-	void EngineStart(HINSTANCE _Inst);
+	void EngineInit(HINSTANCE _Inst);
 
 private:
 	static UEngineWindow MainWindow;

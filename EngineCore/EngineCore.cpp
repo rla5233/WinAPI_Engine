@@ -9,11 +9,8 @@ UEngineCore::~UEngineCore()
 {
 }
 
-void UEngineCore::EngineStart(HINSTANCE _Inst)
+void UEngineCore::EngineInit(HINSTANCE _Inst)
 {
-	LEAKCHECK;
-
 	MainWindow.Init(_Inst);
-
 	MainWindow.MessageRoop();
 }
