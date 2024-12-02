@@ -7,6 +7,9 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{608b0b2f-e0b5-4833-b2e9-31206b0b00d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{88efb251-4312-4228-8a5c-9d5165bc9c2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -15,6 +18,9 @@
     <ClInclude Include="EngineDebug.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="EngineString.h">
+      <Filter>String</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -22,6 +28,9 @@
     </ClCompile>
     <ClCompile Include="EngineDebug.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineString.cpp">
+      <Filter>String</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
