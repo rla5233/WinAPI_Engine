@@ -17,10 +17,8 @@ void UEngineWindow::Init(HINSTANCE _Inst)
 {
     MyRegisterClass(_Inst);
 
-    if (InitInstance(_Inst))
-    {
-        // TO 에러 메시지
-    }
+    if (!InitInstance(_Inst))
+        MsgBoxAssert(L"Windows Initialization Failed");
 }
 
 LRESULT UEngineWindow::WndProc(HWND _Hwnd, UINT _Message, WPARAM _WParam, LPARAM _LParam)
